@@ -17,6 +17,7 @@
     </tr>
   </table>
   </form>
+  
     <!-- <button><a href="./edit.php">ログイン</a></button> -->
 </body>
 </html>
