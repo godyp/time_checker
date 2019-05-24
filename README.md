@@ -14,3 +14,14 @@
 config.vm.network "forwarded_port", guest: 3000, host:3000
 編集後再起動が必要
 vagrant reload
+
+使用DB
+SQLite3の
+インストールはUbuntu上で
+$sudo apt-get install sqlite3
+
+
+＜開発環境＞
+ubuntu18.04.1
+PHP 7.3.5
+SQLite3 3.22.0
