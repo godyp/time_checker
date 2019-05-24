@@ -4,11 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Time Checker</title>
+    <link rel="stylesheet" href="./../css/edit_style.css">
 </head>
 
 <body>
-    <h1>〇〇さんの勤怠履歴</h1>
-    <button><a href="../index.php">HOMEに戻る</a></button>
+    <div class="main">
+        <header>
+            <div class="container">
+                <h2 class="header-left">~〇〇さんの勤怠履歴~</h2>
+            </div>
+        </header>
+    <button><a href="../index.php">GO HOME</a></button>
 </body>
-
 </html>
