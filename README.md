@@ -1,24 +1,16 @@
 # time_checker
+デバッグのためのサーバ起動方法
+１．ターミナルでindex.phpのあるフォルダ内に入る
 
-phpの起動の仕方
-仮想環境内のターミナルでindex.phpのフォルダに入る。
-$ ip -a
-でipアドレスをコピーする。
+２．ipアドレスを調べてコピー
+　　$ ip a
+   eth0のinetに続く部分（デフォルトでは、10.0.2.15）
 
+３．サーバ起動
+　　$ php -S 10.0.2.15:3000
+   ポート番号は使用可能なポートを選択
 
-phpの簡易サーバーを起動
-$ php -S xxx.xxx.xxx.xxx:8000
-PHP 7.3.5-1+ubuntu18.04.1+deb.sury.org+1 Development Server started at Fri May 24 04:01:37 2019
-Listening on http://xxx.xxx.xxx.xxx:8000
-Document root is /home/vagrant/share/time_checker/time_checker
-Press Ctrl-C to quit.
-
-3行目のURLをコピーして、ブラウザに貼ると表示される
-
-phpを起動しなくても
-拡張子を.htmlに変えるとブラウザで開ける
-
-※
-KIT-IA
-KIT-IB
-の学内LANでは起動できないかも？
+*ホストOS側のブラウザ等でページを見たい場合は、Vagrantfileに設定の記述が必要
+config.vm.network "forwarded_port", guest: 3000, host:3000
+編集後再起動が必要
+vagrant reload
