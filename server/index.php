@@ -19,21 +19,21 @@
         <div class="db-table">
             <div class="container">
                 <h3>現在の状態</h3>
-                <table class="state">
+                <table class="state" border="1" border-color="#666" bgcolor="white" width="50%">
                     <tr>
                         <th>名前</th>
-                        <th>学内</th>
-                        <th>帰宅</th>
+                        <th width="20%">学内</th>
+                        <th width="20%">帰宅</th>
                     </tr>
-                    <tr>
+                    <tr align="center">
                         <td>foo</td>
-                        <td></td>
-                        <td></td>
+                        <td>◯</td>
+                        <td>-</td>
                     </tr>
-                    <tr>
+                    <tr align="center">
                         <td>bar</td>
-                        <td></td>
-                        <td></td>
+                        <td>-</td>
+                        <td>◯</td>
                     </tr>
                 </table>
             </div>
