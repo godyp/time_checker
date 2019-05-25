@@ -23,6 +23,7 @@ header{
     padding-bottom: 10px;
     height:100px;
     background-color:#D9D8D9;
+    box-shadow: 0 3px rgba(217,216,217,0.5);
 }
 
 .main .header-left {
@@ -45,10 +46,18 @@ header{
     color: white;
     float:right;
     box-shadow: 0 3px #666;
+    transition: opacity 0.3s;
 }
 
 .main .header-right:hover{
     cursor: pointer;
+    opacity: 0.7;
+}
+
+.main .header-right:active{
+    position: relative;
+    top:3px;
+    box-shadow: none;
 }
 
 .main header h1{
@@ -62,9 +71,51 @@ header{
 
 
 .state{
-    border-collapse: collapse;
+    border-collapse: separate;
+    border: 2px solid #666;
+    border-spacing: 0;
+    border-radius:5px;
+    overflow:hidden;
+    background-color: white;
+    width : 50%;
 }
 
 .state th, .state td {
-    border: solid 2px #333;
-  }
+    border: solid 2px #666;
+}
+
+.state tr{
+    text-align: center;
+}
+
+.state th{
+    border-top: none;
+    background-color : #ccc;
+}
+
+.state th:first-child{
+    width:60%;
+}
+
+.state th:first-child,
+.state td:first-child{
+    border-left: none;
+}
+
+.state th:last-child,
+.state td:last-child{
+    border-right: none;
+}
+
+.state tr:last-child td{
+    border-bottom: none;
+}
+.state th + th,
+.state td + td{
+    border-left: none;
+}
+
+.state td{
+    border-top: none;
+}
+
