@@ -13,7 +13,7 @@
             <div class="container">
                 <h1 class="header-left">HOME</h1>
                 <h2 class="header-left">~田中・林研　勤怠管理システム~</h2>
-                <a class="header-right" href="./pages/rogin.php">ログイン</a>
+                <a class="header-right" href="./pages/login.php">ログイン</a>
             </div>
         </header>
         <div class="db-table">
