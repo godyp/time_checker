@@ -25,3 +25,14 @@ $sudo apt-get install sqlite3
 ubuntu18.04.1
 PHP 7.3.5
 SQLite3 3.22.0
+
+
+
+
+python の環境は
+nfcpy を利用するため
+python2.X系を使う
+
+
+
+databaseの仕様はwikiを参照
