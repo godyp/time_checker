@@ -23,7 +23,7 @@ header{
     padding-bottom: 10px;
     height:100px;
     background-color:#D9D8D9;
-    box-shadow: 0 3px rgba(217,216,217,0.5);
+    box-shadow: 0 3px 3px rgba(217,216,217,0.5);
 }
 
 .main .header-left {
@@ -78,6 +78,7 @@ header{
     overflow:hidden;
     background-color: white;
     width : 50%;
+    box-shadow:0 0 10px #ccc;
 }
 
 .state th, .state td {
