@@ -22,20 +22,25 @@
             <form action="" method="post">
                 <input class="start" id="startsignup" type="submit" name="start" value="新規登録を開始する(Touch FeliCa)">
                 <?php
+                $idm;
                 if (isset($_POST['start'])) {
                     $command = "python ../../reader/getidm.py ";
                     exec($command, $output);
                     echo '<p>FeliCa IDm = ' . $output[0] . '</p>';
+                    $idm = $output[0];
                     echo '<div class="sign-up">
+                            <p><input type="hidden" name="idm" value="' . $idm . '"></p>
                             <p>学籍番号：<input type="text" name="sid" size="40"></p>
                             <p>　名前　：<input type="text" name="name" size="40"></p>
                             <input class="register" type="submit" name="register" value="登録する">
                         </div>';
                 }
                 if (isset($_POST['register'])) {
-                    $command = "python ../../reader/addmem.py " . $output[0] . " " . $_POST['sid'] . " " . $_POST['name'];
+                    $command = "python ../../reader/addmem.py " . $_POST['idm'] . " " . $_POST['sid'] . " " . $_POST['name'];
                     exec($command, $output);
-                    echo '<p>Member added !</p>';
+                    echo '<p>' . $output[0] . '</p>';
+                    echo '<p>' . $output[1] . '</p>';
+                    echo '<p>' . $output[2] . '</p>';
                 }
                 ?>
             </form>

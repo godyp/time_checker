@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+import sys
 import time
 from threading import Thread, Timer
-TIME_wait = 3
-time.sleep(TIME_wait)
-print ("Add Member")
+print (sys.argv[1])
+print (sys.argv[2])
+print (sys.argv[3])
