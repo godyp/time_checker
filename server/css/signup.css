@@ -1,0 +1,53 @@
+.container {
+  text-align: center;
+}
+
+.start,
+.register {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  width: 500px;
+  text-align: center;
+  margin-top: 35px;
+  background-color: #999;
+  border-radius: 5px;
+  color: white;
+  box-shadow: 0 3px #666;
+  transition: opacity 0.3s;
+  font-size:25px;
+  border:none;
+}
+
+.start{
+    margin-top:100px;
+    margin-bottom:50px;
+}
+
+.start:hover,
+.register:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.start:active,
+.register:active {
+  position: relative;
+  top: 3px;
+  box-shadow: none;
+}
+
+.sign-up{
+    margin: 0 auto;
+    border:1px solid #666;
+    border-radius:10px;
+    width:500px;
+}
+
+.register {
+    height:30px;
+    line-height:30px;
+    width:100px;
+    font-size:16px;
+    margin-bottom:30px;
+}
