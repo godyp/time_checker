@@ -1,3 +1,9 @@
+<!-- 実機では 
+29   $command = "python ../../reader/sample/getidm.py ";
+44   $command = "python ../../reader/sample/addmem.py " . $_POST['idm'] . " " . $_POST['sid'] . " " . $_POST['name'];
+のsampleを消してから実行する
+-->
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -24,7 +30,7 @@
                 <?php
                 $idm;
                 if (isset($_POST['start'])) {
-                    $command = "python ../../reader/getidm.py ";
+                    $command = "python ../../reader/sample/getidm.py ";
                     exec($command, $output);
                     echo '<p>FeliCa IDm = ' . $output[0] . '</p>';
                     $idm = $output[0];
@@ -36,7 +42,7 @@
                         </div>';
                 }
                 if (isset($_POST['register'])) {
-                    $command = "python ../../reader/addmem.py " . $_POST['idm'] . " " . $_POST['sid'] . " " . $_POST['name'];
+                    $command = "python ../../reader/sample/addmem.py " . $_POST['idm'] . " " . $_POST['sid'] . " " . $_POST['name'];
                     exec($command, $output);
                     echo '<p>' . $output[0] . '</p>';
                     echo '<p>' . $output[1] . '</p>';
