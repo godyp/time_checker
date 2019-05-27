@@ -5,3 +5,4 @@ from threading import Thread, Timer
 print (sys.argv[1])
 print (sys.argv[2])
 print (sys.argv[3])
+print("sample/のaddmem.pyが実行されている")

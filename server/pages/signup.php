@@ -1,4 +1,4 @@
-<!-- 実機では 
+<!-- 実機では
 29   $command = "python ../../reader/sample/getidm.py ";
 44   $command = "python ../../reader/sample/addmem.py " . $_POST['idm'] . " " . $_POST['sid'] . " " . $_POST['name'];
 のsampleを消してから実行する
@@ -33,6 +33,7 @@
                     $command = "python ../../reader/sample/getidm.py ";
                     exec($command, $output);
                     echo '<p>FeliCa IDm = ' . $output[0] . '</p>';
+                    echo '<p>FeliCa IDm = ' . $output[1] . '</p>';
                     $idm = $output[0];
                     echo '<div class="sign-up">
                             <p><input type="hidden" name="idm" value="' . $idm . '"></p>
@@ -47,6 +48,7 @@
                     echo '<p>' . $output[0] . '</p>';
                     echo '<p>' . $output[1] . '</p>';
                     echo '<p>' . $output[2] . '</p>';
+                    echo '<p>' . $output[3] . '</p>';
                 }
                 ?>
             </form>
