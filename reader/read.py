@@ -41,9 +41,10 @@ def felica_waiting():
             #IDmを取り出す
             idm = binascii.hexlify(tag.idm)
             print 'FeliCa detected. idm = ' + idm
+            clf.close()
+            time.sleep(TIME_wait)
             return idm
 
-            time.sleep(TIME_wait)
         #end if
 
         clf.close()

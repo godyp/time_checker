@@ -15,10 +15,8 @@ config.vm.network "forwarded_port", guest: 3000, host:3000
 編集後再起動が必要
 vagrant reload
 
-<<<<<<< HEAD
 データベース情報
 SQLite3
-=======
 
 
 ###もし他の端末からPHPビルトインサーバーにアクセスしたい場合はVagrantfileを編集する
@@ -57,7 +55,6 @@ $ php -S 192.168.xxx.xxx:3000
 
 ##使用DB
 SQLite3の
->>>>>>> 938f79ab02d6c963bbc074ba6e73b583857196e6
 インストールはUbuntu上で
 $sudo apt-get install sqlite3
 
