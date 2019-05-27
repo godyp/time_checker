@@ -1,3 +1,11 @@
+<?php
+session_start();
+if(isset($_POST['datapost'])){
+  $_SESSION['id'] = $_POST['id'];
+  header('Location:edit.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,19 +13,12 @@
     <title>Time Checker</title>
 </head>
 <body>
-    <h1>ログイン</h1>
-    <form action="edit.php" method="post" autocomplete="off">
-    <table border="1">
-    <tr>
-    <td>学籍番号</td>
-      <td><input type="text" name="name" maxlength="8"></td>
-      <td colspan="2" align="center">
-         <input type="submit" value="ログイン">
-      </td>
-    </tr>
-  </table>
+  <h1>ログイン</h1>
+  <form action="" method="post" autocomplete="off">
+    <p>学籍番号</p>
+    <input type="text" name="id" maxlength="8">
+    <input type="submit" name="datapost">
   </form>
-  
     <!-- <button><a href="./edit.php">ログイン</a></button> -->
 </body>
 </html>

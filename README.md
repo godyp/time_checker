@@ -15,8 +15,8 @@ config.vm.network "forwarded_port", guest: 3000, host:3000
 編集後再起動が必要
 vagrant reload
 
-使用DB
-SQLite3の
+データベース情報
+SQLite3
 インストールはUbuntu上で
 $sudo apt-get install sqlite3
 
