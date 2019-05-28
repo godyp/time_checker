@@ -48,7 +48,6 @@
                     echo '<p>' . $output[0] . '</p>';
                     echo '<p>' . $output[1] . '</p>';
                     echo '<p>' . $output[2] . '</p>';
-                    echo '<p>' . $output[3] . '</p>';
                 }
                 ?>
             </form>

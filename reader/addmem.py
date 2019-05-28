@@ -83,7 +83,7 @@ def search_sid(sid):
 # members(idM TEXT, name TEXT, sid INTEGER)
 #FeliCaをタッチして学籍番号と前を入力
 print("\n[[[Sign up]]]")
-conn = sqlite3.connect('../server/db/data.db')
+conn = sqlite3.connect('../../server/db/data.db')
 c = conn.cursor()
 # idm = input(">>> FeliCa IDm : ")
 idm = sys.argv[1]
