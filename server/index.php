@@ -28,7 +28,6 @@ $res = $db->query($sql);
                 <h1 class="header-left">HOME</h1>
                 <h2 class="header-left">~田中・林研　勤怠管理システム~</h2>
                 <a class="header-right" href="./pages/login.php">ログイン</a>
-                <a class="header-right" href="./pages/signup.php">新規登録</a>
             </div>
         </header>
         <div class="db-table">
@@ -47,7 +46,7 @@ $res = $db->query($sql);
                         $row_sts = $res_sts->fetchArray();
                         echo '<tr>';
                         echo '<td>' . $row[0] . '</td>';
-                        if ($row_sts[0] != NULL) {
+                        if ($row_sts[0] == NULL) {
                             echo '<td>◯</td>';
                             echo '<td>-</td>';
                         } else {

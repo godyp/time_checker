@@ -58,53 +58,13 @@ header{
 }
 
 
-  .state{
-    border-collapse: separate;
-    border: 2px solid #666;
-    border-spacing: 0;
-    border-radius:5px;
-    overflow:hidden;
-    background-color: white;
-    width : 80%;
-    box-shadow:0 0 10px #ccc;
+
+
+
+.state{
+    border-collapse: collapse;
 }
 
 .state th, .state td {
-    border: solid 2px #666;
-}
-
-.state tr{
-    text-align: center;
-}
-
-.state th{
-    border-top: none;
-    background-color : #ccc;
-}
-
-.state th:first-child{
-    width:30%;
-}
-
-.state th:first-child,
-.state td:first-child{
-    border-left: none;
-}
-
-.state th:last-child,
-.state td:last-child{
-    border-right: none;
-}
-
-.state tr:last-child td{
-    border-bottom: none;
-}
-.state th + th,
-.state td + td{
-    border-left: none;
-}
-
-.state td{
-    border-top: none;
-}
-
+    border: solid 2px #333;
+  }
