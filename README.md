@@ -15,6 +15,8 @@ config.vm.network "forwarded_port", guest: 3000, host:3000
 編集後再起動が必要
 vagrant reload
 
+データベース情報
+SQLite3
 
 
 ###もし他の端末からPHPビルトインサーバーにアクセスしたい場合はVagrantfileを編集する
