@@ -23,7 +23,7 @@ def felica_waiting():
     # 0003(Suica)
     # target_req_felica.sensf_req = bytearray.fromhex("0000030000")
 
-    print 'FeliCa waiting...'
+    #print 'FeliCa waiting...'
     while True:
         # USBに接続されたNFCリーダに接続してインスタンス化
         clf = nfc.ContactlessFrontend('usb')
@@ -40,7 +40,7 @@ def felica_waiting():
 
             #IDmを取り出す
             idm = binascii.hexlify(tag.idm)
-            print 'FeliCa detected. idm = ' + idm
+            #print 'FeliCa detected. idm = ' + idm
             clf.close()
             time.sleep(TIME_wait)
             return idm
