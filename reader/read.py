@@ -8,6 +8,11 @@ import time
 from threading import Thread, Timer
 import datetime
 import sqlite3
+import RPi.GPIO as GPIO
+
+#GPIOのピン設定
+RED = 25
+GREEN = 24
 
 # FeliCa待ち受けの1サイクル秒
 TIME_cycle = 1.0
