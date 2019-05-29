@@ -25,6 +25,7 @@ $data = $stmt->fetch();
     <meta charset="UTF-8">
     <title>Time Checker</title>
     <link rel="stylesheet" href="./../css/edit_style.css">
+    <script  src="./../js/edit.js"></script>
 </head>
 
 <body>
@@ -43,9 +44,11 @@ $data = $stmt->fetch();
                 <h3>履歴一覧</h3>
                 <table class="state">
                     <tr>
-                        <th>名前</th>
+                        <th>日付</th>
                         <th>入室時刻</th>
                         <th>退室時刻</th>
+                        <th>滞在時間</th>
+                        <th>        </th>
                     </tr>
                     <?php
                     $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ?");
@@ -58,13 +61,26 @@ $data = $stmt->fetch();
                     $stmt->execute();
                     $count =  $stmt->fetchColumn();
 
-                    for ($i=0; $i<$count; $i++) {
-                        echo '<tr>';
-                        echo '<td>' . $data[$i]['name']. '</td>';
-                        echo '<td>' . $data[$i]['in_time'] . '</td>';
-                        echo '<td>' . $data[$i]['out_time'] . '</td>';
-                        echo '</tr>';
-                        $i += 1;
+                    $latest_month = $data[$count]['in_month'];
+                    $latest_month = intval( $latest_month );
+                    $i = 0;
+                    for($i = $latest_month; $i>3; $i--){
+                        echo '<p>月</p>';
+                        for ($j=0; $j<$count; $j++) {
+                            echo '<tr>';
+                            echo '<td>'.$data[$i]['in_day'].'</td>';
+                            echo '<td>'.$data[$i]['in_hour'].':'. $data[$i]['in_minute'].'</td>';
+                            echo '<td>'.$data[$i]['out_hour'].':'.$data[$i]['out_minute'].'</td>';
+                            if( $data[$i]['in_day'] === $data[$i]['out_day']){
+                                $staying_time = intval($data[$i]['in_time']) - intval($data[$i]['out_time']);
+                            }else{
+                                $staying_time = (24 - intval($data[$i]['in_time'])) + intval($data[$i]['out_time']);
+                            }
+                            echo '<td>'.$staying_time.'</td>';
+                            echo '<td><input value="  編集  " class="btn-right-radius"type="button" onClick="disp()"></td>';
+                            echo '</tr>';
+                            $j += 1;
+                        }
                     }
                     ?>
                 </table>
