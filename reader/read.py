@@ -21,6 +21,22 @@ TIME_interval = 0.2
 # タッチされてから次の待ち受けを開始するまで無効化する秒
 TIME_wait = 3
 
+def light_up(color):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(color, GPIO.OUT)
+
+    GPIO.output(color, GPIO.HIGH)
+    time.sleep(0.5)
+    GPIO.output(RED, GPIO.LOW)
+    time.sleep(0.5)
+    GPIO.output(color, GPIO.HIGH)
+    time.sleep(0.5)
+    GPIO.output(RED, GPIO.LOW)
+    time.sleep(0.5)
+
+    GPIO.cleanup()
+
+
 def felica_waiting():
     # NFC接続リクエストのための準備
     # 212F(FeliCa)で設定
@@ -108,8 +124,10 @@ def check_intime(sid):
 def search_idm(idm):
     sql = 'select sid,name from members where idm="' + str(idm) + '"'
     for row in c.execute(sql):
+        light_up(GREEN)
         return row
     print("error : idm is not exist in members table")
+    light_up(RED)
     return False
 
 # status テーブルの中に sid が
