@@ -23,7 +23,7 @@ def felica_waiting():
     # 0003(Suica)
     # target_req_felica.sensf_req = bytearray.fromhex("0000030000")
 
-    print 'FeliCa waiting...'
+    print ('FeliCa waiting...')
     while True:
         # USBに接続されたNFCリーダに接続してインスタンス化
         clf = nfc.ContactlessFrontend('usb')
@@ -40,7 +40,7 @@ def felica_waiting():
 
             #IDmを取り出す
             idm = binascii.hexlify(tag.idm)
-            print 'FeliCa detected. idm = ' + idm
+            print ('FeliCa detected. idm = ' + idm)
             clf.close()
             time.sleep(TIME_wait)
             return idm
@@ -83,7 +83,7 @@ def record_in_time(row_mem):
 def record_out_time(row_sts):
     out_time = datetime.datetime.now()
     data = (out_time.year, out_time.month, out_time.day, out_time.hour, out_time.minute)
-    values = row_sts + out_time
+    values = row_sts + data
     c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", values)
     sql = 'delete from status where sid="' + str(sid) + '"'
     c.execute(sql)
