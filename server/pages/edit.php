@@ -60,12 +60,13 @@ $data = $stmt->fetch();
                     $stmt->bindValue(1, $id);
                     $stmt->execute();
                     $count =  $stmt->fetchColumn();
+                    
 
                     $latest_month = $data[$count]['in_month'];
                     $latest_month = intval( $latest_month );
-                    $i = 0;
+                    echo '月'.$latest_month ;
                     for($i = $latest_month; $i>3; $i--){
-                        echo '<p>月</p>';
+                        echo '月';
                         for ($j=0; $j<$count; $j++) {
                             echo '<tr>';
                             echo '<td>'.$data[$i]['in_day'].'</td>';
