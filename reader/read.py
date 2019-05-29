@@ -19,7 +19,7 @@ TIME_cycle = 1.0
 # FeliCa待ち受けの反応インターバル秒
 TIME_interval = 0.2
 # タッチされてから次の待ち受けを開始するまで無効化する秒
-TIME_wait = 3
+TIME_wait = 5
 
 def light_up(color):
     GPIO.setmode(GPIO.BCM)
@@ -44,6 +44,8 @@ def felica_waiting():
     # 0003(Suica)
     # target_req_felica.sensf_req = bytearray.fromhex("0000030000")
 
+    time.sleep(TIME_wait)
+
     print ('FeliCa waiting...')
     while True:
         # USBに接続されたNFCリーダに接続してインスタンス化
@@ -63,7 +65,6 @@ def felica_waiting():
             idm = binascii.hexlify(tag.idm)
             print ('FeliCa detected. idm = ' + idm)
             clf.close()
-            time.sleep(TIME_wait)
             return idm
 
         #end if
