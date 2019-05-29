@@ -75,14 +75,16 @@ def insert_members(idm):
 # status テーブルに行を追加
 def record_in_time(row_mem):
     in_time = datetime.datetime.now()
-    values = row_mem + (in_time,)
-    c.execute("INSERT INTO status VALUES (?,?,?)", values)
+    data = (in_time.year, in_time.month, in_time.day, in_time.hour, in_time.minute)
+    values = row_mem + data
+    c.execute("INSERT INTO status VALUES (?,?,?,?,?,?,?)", values)
 
 # status テーブルから行を削除し、history テーブルに行を追加する
 def record_out_time(row_sts):
     out_time = datetime.datetime.now()
-    values = row_sts + (out_time,)
-    c.execute("INSERT INTO history VALUES (?,?,?,?)", values)
+    data = (out_time.year, out_time.month, out_time.day, out_time.hour, out_time.minute)
+    values = row_sts + out_time
+    c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", values)
     sql = 'delete from status where sid="' + str(sid) + '"'
     c.execute(sql)
 
@@ -106,10 +108,10 @@ def search_idm(idm):
     return False
 
 # status テーブルの中に sid が
-# 存在すれば     (sid, name, in_time)
+# 存在すれば     (sid, name, in_year, in_month, in_day, in_hour, in_minute)
 # 存在しなければ false
 def search_sid(sid):
-    sql = 'select sid,name,in_time from status where sid="' + str(sid) + '"'
+    sql = 'select sid,name, in_year, in_month, in_day, in_hour, in_minute from status where sid="' + str(sid) + '"'
     for row in c.execute(sql):
         return row
     return False
@@ -121,72 +123,59 @@ def search_sid(sid):
 
 
 
-#１メンバー登録
-#IDmと名前、学籍番号をデータベースに登録し紐付ける
-# members(idM TEXT, name TEXT, sid INTEGER)
-#FeliCaをタッチして学籍番号と前を入力
-print("\n[[[Sign up]]]")
-conn = sqlite3.connect('../server/db/data.db')
-c = conn.cursor()
-# idm = input(">>> FeliCa IDm : ")
-idm = felica_waiting()
-insert_members(idm)
-print("\n[member table]")
-select_table("members")
-conn.commit()
-conn.close()
+# #１メンバー登録
+# #IDmと名前、学籍番号をデータベースに登録し紐付ける
+# # members(idm TEXT, name TEXT, sid INTEGER)
+# #FeliCaをタッチして学籍番号と前を入力
+# print("\n[[[Sign up]]]")
+# conn = sqlite3.connect('../server/db/data.db')
+# c = conn.cursor()
+# # idm = input(">>> FeliCa IDm : ")
+# idm = felica_waiting()
+# insert_members(idm)
+# print("\n[member table]")
+# select_table("members")
+# conn.commit()
+# conn.close()
 
 
 
 #２打刻
 #学籍番号、名前、入室時間、体質時間の登録
-# status(sid INTEGER, name TEXT, in_time TEXT)
-# history(sid INTEGER, name TEXT, in_time TEXT, out_time TEXT)
+# members(idm TEXT, name TEXT, sid INTEGER)
+# status(sid INTEGER, name TEXT, in_year TEXT, in_month TEXT, in_day TEXT, in_hour TEXT, in_minute TEXT)
+# history(sid INTEGER, name TEXT, in_year TEXT, in_month TEXT, in_day TEXT, in_hour TEXT, in_minute TEXT, out_year TEXT, out_month TEXT, out_day TEXT, out_hour TEXT, out_minute TEXT)
 while True:
-    while idm != "exit":
-        conn = sqlite3.connect('../server/db/data.db')
-        c = conn.cursor()
-        #FeliCaがかざされたら実行
-        # idm = input("\n>>> FeliCa IDm : ")
-        idm = felica_waiting()
-        # idm が登録されていなければ初めからやり直しにする
-        row_mem = search_idm(idm)
-        if row_mem == False:
-            break
-
-        # in_time が存在しなければ in_time を記録する
-        sid, name = row_mem
-        row_sts = search_sid(sid)
-        if row_sts == False:
-            record_in_time(row_mem)
-        else:
-            record_out_time(row_sts)
-
-        #それぞれのテーブルを確認する
-        print("\n[member table]")
-        select_table("members")
-        print("\n[status table]")
-        select_table("status")
-        print("\n[history table]")
-        select_table("history")
-
-
-        conn.commit()
-
-        conn.close()
-
-
-    #１メンバー登録
-    #IDmと名前、学籍番号をデータベースに登録し紐付ける
-    # members(idm TEXT, name TEXT, sid TEXT)
-    #FeliCaをタッチして学籍番号と前を入力
-    print("\n[[[Sign up]]]")
     conn = sqlite3.connect('../server/db/data.db')
     c = conn.cursor()
-    # idm = input(">>> FeliCa IDm : ")
+    #FeliCaの待機
     idm = felica_waiting()
-    insert_members(idm)
+    # members テーブルに idm が登録されていなければ初めからやり直しにする
+    # TODO
+    # 未登録：赤のLEDを光らせる
+    # 登録済：緑のLEDを光らせる
+    row_mem = search_idm(idm)
+    if row_mem == False:
+        continue
+
+    # in_time が存在しなければ in_time を記録する
+    sid, name = row_mem
+    row_sts = search_sid(sid)
+    if row_sts == False:
+        record_in_time(row_mem)
+    else:
+        record_out_time(row_sts)
+
+    #それぞれのテーブルを確認する
     print("\n[member table]")
     select_table("members")
+    print("\n[status table]")
+    select_table("status")
+    print("\n[history table]")
+    select_table("history")
+
+
     conn.commit()
+
     conn.close()
+

@@ -29,6 +29,9 @@ def insert_members(idm):
     name = sys.argv[3]
     values = (idm, name, sid)
     c.execute("INSERT INTO members VALUES (?,?,?)", values)
+    print(idm)
+    print(sid)
+    print(name)
     return True
 
 # status テーブルに行を追加
@@ -61,7 +64,7 @@ def search_idm(idm):
     sql = 'select sid,name from members where idm="' + str(idm) + '"'
     for row in c.execute(sql):
         return row
-    print("error : idm is not exist in members table")
+    #print("error : idm is not exist in members table")
     return False
 
 # status テーブルの中に sid が
@@ -82,13 +85,13 @@ def search_sid(sid):
 #IDmと名前、学籍番号をデータベースに登録し紐付ける
 # members(idM TEXT, name TEXT, sid INTEGER)
 #FeliCaをタッチして学籍番号と前を入力
-print("\n[[[Sign up]]]")
-conn = sqlite3.connect('../server/db/data.db')
+#print("\n[[[Sign up]]]")
+conn = sqlite3.connect('../../server/db/data.db')
 c = conn.cursor()
 # idm = input(">>> FeliCa IDm : ")
 idm = sys.argv[1]
 insert_members(idm)
-print("\n[member table]")
-select_table("members")
+#print("\n[member table]")
+#select_table("members")
 conn.commit()
 conn.close()

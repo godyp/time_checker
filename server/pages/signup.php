@@ -30,10 +30,9 @@
                 <?php
                 $idm;
                 if (isset($_POST['start'])) {
-                    $command = "python ../../reader/sample/getidm.py ";
+                    $command = "python ../../reader/getidm.py ";
                     exec($command, $output);
                     echo '<p>FeliCa IDm = ' . $output[0] . '</p>';
-                    echo '<p>FeliCa IDm = ' . $output[1] . '</p>';
                     $idm = $output[0];
                     echo '<div class="sign-up">
                             <p><input type="hidden" name="idm" value="' . $idm . '"></p>
@@ -43,12 +42,14 @@
                         </div>';
                 }
                 if (isset($_POST['register'])) {
-                    $command = "python ../../reader/sample/addmem.py " . $_POST['idm'] . " " . $_POST['sid'] . " " . $_POST['name'];
+                    $command = "python ../../reader/addmem.py " . $_POST['idm'] . " " . $_POST['sid'] . " " . $_POST['name'];
                     exec($command, $output);
-                    echo '<p>' . $output[0] . '</p>';
-                    echo '<p>' . $output[1] . '</p>';
-                    echo '<p>' . $output[2] . '</p>';
-                    echo '<p>' . $output[3] . '</p>';
+                    echo '<div class="sign-up">
+                            <p>以下の情報で登録しました</p>
+                            <p>FeliCa IDm : ' . $output[0] . '</p>
+                            <p>学籍番号 : ' . $output[1] . '</p>
+                            <p>名　　前 : ' . $output[2] . '</p>
+                    </div>';
                 }
                 ?>
             </form>
