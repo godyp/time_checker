@@ -27,11 +27,11 @@ def light_up(color):
 
     GPIO.output(color, GPIO.HIGH)
     time.sleep(0.5)
-    GPIO.output(RED, GPIO.LOW)
+    GPIO.output(color, GPIO.LOW)
     time.sleep(0.5)
     GPIO.output(color, GPIO.HIGH)
     time.sleep(0.5)
-    GPIO.output(RED, GPIO.LOW)
+    GPIO.output(color, GPIO.LOW)
     time.sleep(0.5)
 
     GPIO.cleanup()
