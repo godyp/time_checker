@@ -63,7 +63,6 @@ def felica_waiting():
             #print 'FeliCa detected. idm = ' + idm
             light_up(GREEN)
             clf.close()
-            time.sleep(TIME_wait)
             return idm
 
         #end if
