@@ -43,7 +43,8 @@ header {
   margin-bottom: 0;
 }
 
-.main .header-right {
+.main .header-right,
+.btn {
   display: inline-block;
   height: 30px;
   line-height: 30px;
@@ -58,16 +59,19 @@ header {
   transition: opacity 0.3s;
 }
 
-.main .header-right + .header-right {
+.main .header-right + .header-right,
+.main .right + .right {
   margin-right: 30px;
 }
 
-.main .header-right:hover {
+.main .header-right:hover,
+.main .right:hover {
   cursor: pointer;
   opacity: 0.7;
 }
 
-.main .header-right:active {
+.main .header-right:active,
+.main .right:active {
   position: relative;
   top: 3px;
   box-shadow: none;
@@ -128,4 +132,10 @@ header {
 
 .state td {
   border-top: none;
+}
+
+
+.right{
+  float:right;
+
 }
