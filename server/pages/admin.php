@@ -5,7 +5,7 @@ $sql = null;
 $res = null;
 $row = null;
 
-$db = new SQLite3("./db/data.db");
+$db = new SQLite3("../db/data.db");
 // データの取得
 $sql = "SELECT name,sid FROM members";
 $res = $db->query($sql);
@@ -18,7 +18,7 @@ $res = $db->query($sql);
 <head>
     <meta charset="UTF-8">
     <title>Time Checker:admin</title>
-    <link rel="stylesheet" href="./css/index_style.css">
+    <link rel="stylesheet" href="../css/index_style.css">
 </head>
 
 <body>
@@ -27,21 +27,23 @@ $res = $db->query($sql);
             <div class="container">
                 <h1 class="header-left">HOME</h1>
                 <h2 class="header-left">~田中・林研　勤怠管理システム~</h2>
-                <a class="header-right" href="./pages/login.php">ログイン</a>
-                <a class="header-right" href="./pages/signup.php">新規登録</a>
+                <a class="header-right" href="./login.php">ログイン</a>
+                <a class="header-right" href="./signup.php">新規登録</a>
             </div>
         </header>
         <div class="right">
+            <h3>admin menu</h3>
             <form action="" method="post">
+                <p>FeliCa読み取りOn/Off</p>
                 <ul>
-                    <li class="btn"><input class="start" id="" type="submit" name="start" value="開始"></li>
+                    <li><input class="start btn" id="" type="submit" name="start" value="開始"></li>
                     <?php
                     if (isset($_POST['start'])) {
                         $command = "python ../../reader/read.py";
                         exec($command, $output);
                     }
                     ?>
-                    <li class="btn"><input class="stop" id="" type="submit" name="stop" value="停止"></li>
+                    <li><input class="stop btn" id="" type="submit" name="stop" value="停止"></li>
                     <?php
                     if (isset($_POST['stop'])) {
                         $command = "ps alx | grep 'python read.py'";
@@ -51,6 +53,7 @@ $res = $db->query($sql);
                         system($command);
                     }
                     ?>
+                    <div class="clear"></div>
                 </ul>
             </form>
         </div>
