@@ -18,3 +18,20 @@ function disp(){
         window.alert('キャンセルされました');
     }
 }
+
+// function createSelectBox(){
+//   //連想配列の配列
+//   var　staying_time = new Array(25);
+//   for (var i=0; i<=24; i++){
+//       var value = String(i);
+//       var text = String(i) + '時間';
+//       staying_time[i] = {val:value, txt:text};
+//   }
+//   //連想配列をループ処理で値を取り出してセレクトボックスにセットする
+//   for(var i=0;i<staying_time.length;i++){
+//     let op = document.createElement("option");
+//     op.value = staying_time[i].val;
+//     op.text = staying_time[i].txt;
+//     document.getElementById("sel1").appendChild(op);
+//   }
+// };

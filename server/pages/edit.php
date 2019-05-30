@@ -11,10 +11,68 @@ try{
 
 $id = $_SESSION['id'];
 $id = intval($id);
-$stmt = $pdo->prepare("SELECT * FROM members WHERE sid = ?");
+$stmt = $pdo->prepare("SELECT name FROM members WHERE sid = ?");
 $stmt->bindValue(1, $id);
 $stmt->execute();
-$data = $stmt->fetch();
+$name = $stmt->fetch();
+
+function ShowMonthHistory($month, $year){
+    global $pdo;
+    global $id;
+
+    $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ? AND in_month = ? AND in_year = ? ORDER BY in_day ASC");
+    $stmt->bindValue(1, $id);
+    $stmt->bindValue(2, $month);
+    $stmt->bindValue(3, $year);
+    $stmt->execute();
+    $history = $stmt->fetchAll();
+    $history_cnt = count($history);
+
+    if($history_cnt==0)return -1;
+
+    echo '<h2>'.$year.'年'.$month.'月</h2>';
+    echo '<table class="state"> <tr> <th>日付</th> <th>入室時刻</th> <th>退室時刻</th> <th>滞在時間</th>　<th>編集</th> </tr>';
+    for($i=0;$i<$history_cnt;$i++){
+        echo '<tr>';
+            echo '<td>'.$history[$i]['in_day'].'</td>';
+            echo '<td>'.$history[$i]['in_hour'].':'. $history[$i]['in_minute'].'</td>';
+            echo '<td>'.$history[$i]['out_hour'].':'.$history[$i]['out_minute'].'</td>';
+            if( $history[$i]['in_day'] === $history[$i]['out_day']){
+                $staying_time = intval($history[$i]['in_time']) - intval($history[$i]['out_time'])+1;
+            }else{
+                $staying_time = (24 - intval($history[$i]['in_time'])) + intval($history[$i]['out_time'])+1;
+            }
+            echo '<td>'.$staying_time.'<selet id="sel1"></select>'.'</td>';
+            //echo '<td>'.'<input type="button" value=" ボタン " onclick="createSelectBox();" />'.'</td>';
+            echo '<td><input value="  編集ページ  " class="btn-right-radius"type="button" onClick="disp()"></td>';
+            echo '</tr>';
+    }
+    return 1;
+}
+
+function GetLatestYear(){
+    global $pdo;
+    global $id;
+    $stmt = $pdo->prepare("SELECT in_year, in_month  FROM history WHERE sid = ? ");
+    $stmt->bindValue(1, $id);
+    $stmt->execute();
+    $all_history = $stmt->fetchAll();
+    $array_size = count($all_history);
+    $latest_year = $all_history[$array_size-1][0];
+    return intval($latest_year);
+}
+
+function GetLatestMonth(){
+    global $pdo;
+    global $id;
+    $stmt = $pdo->prepare("SELECT in_year, in_month  FROM history WHERE sid = ? ");
+    $stmt->bindValue(1, $id);
+    $stmt->execute();
+    $all_history = $stmt->fetchAll();
+    $array_size = count($all_history);
+    $latest_month = $all_history[$array_size-1][1];
+    return intval($latest_month);
+}
 //$pdo = NULL; //DB接続解除
 ?>
 
@@ -33,7 +91,7 @@ $data = $stmt->fetch();
         <header>
             <div class="container">
                 <h2 class="header-left">
-                    <?php echo $data['name'] ?>さんの勤怠履歴
+                    <?php echo $name[0] ?>さんの勤怠履歴
                 </h2>
             </div>
         </header>
@@ -43,60 +101,18 @@ $data = $stmt->fetch();
             <div class="container">
                 <h3>履歴一覧</h3>
                     <?php
-                    $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ?");
-                    $stmt->bindValue(1, $id);
-                    $stmt->execute();
-                    $data = $stmt->fetchAll();
+                    $latest_year = GetLatestYear();
+                    $latest_month = GetLatestMonth();
 
-                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM history WHERE sid = ?");
-                    $stmt->bindValue(1, $id);
-                    $stmt->execute();
-                    $count =  $stmt->fetchColumn();
+                    do{
+                        $exist = ShowMonthHistory($latest_month,$latest_year);
 
-                    $latest_month = $data[$count-1]['in_month'];
-                    $latest_month = intval( $latest_month );
-
-                    $record_num = 0;
-                    $position = $count-$record_num;
-
-                    if( $latest_month===1 || $latest_month===2 ){
-                        $value = 12;
-                    }else{
-                        $value = 0;
-                    }
-
-                    for($i = $latest_month+$value; $i>2; $i--){
-                        $input_month=$i-$value;
-                        echo '<b>'.$input_month.'月</b>';
-
-                        echo '<table class="state"> <tr> <th>日付</th> <th>入室時刻</th> <th>退室時刻</th> <th>滞在時間</th>　<th>編集</th> </tr>';
-                        $stmt = $pdo->prepare("SELECT COUNT(*) FROM history WHERE sid = ? AND in_month = ? ");
-                        $stmt->bindValue(1, $id);
-                        $stmt->bindValue(2, $input_month);
-                        $stmt->execute();
-                        $record_num  = $stmt->fetchColumn();
-
-                        if($i-$value===$latest_month){
-                            $position = $count-$record_num;
-                        }else{
-                            $position -= $record_num;
+                        $latest_month-=1;
+                        if($latest_month==0){
+                            $latest_year-=1;
+                            $latest_month=12;
                         }
-
-                        for ($j=$position; $j<$position+$record_num; $j++) {
-                            echo '<tr>';
-                            echo '<td>'.$data[$j]['in_day'].'</td>';
-                            echo '<td>'.$data[$j]['in_hour'].':'. $data[$j]['in_minute'].'</td>';
-                            echo '<td>'.$data[$j]['out_hour'].':'.$data[$j]['out_minute'].'</td>';
-                            if( $data[$j]['in_day'] === $data[$j]['out_day']){
-                                $staying_time = intval($data[$j]['in_time']) - intval($data[$j]['out_time']);
-                            }else{
-                                $staying_time = (24 - intval($data[$j]['in_time'])) + intval($data[$j]['out_time']);
-                            }
-                            echo '<td>'.$staying_time.'</td>';
-                            echo '<td><input value="  編集  " class="btn-right-radius"type="button" onClick="disp()"></td>';
-                            echo '</tr>';
-                        }
-                       echo '</table>';                    }
+                    }while($exist!=-1)
                     ?>
             </div>
         </div>
