@@ -1,3 +1,7 @@
+#目次
+* [Time Checkerの使い方](https://bitbucket.org/tanakalabo/time_checker/wiki/Time%20Checker%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9)
+
+
 # time_checker
 ##デバッグのためのサーバ起動方法
 １．ターミナルでindex.phpのあるフォルダ内に入る
