@@ -8,11 +8,11 @@ import time
 from threading import Thread, Timer
 import datetime
 import sqlite3
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 #GPIOのピン設定
-#RED = 25
-#GREEN = 24
+RED = 25
+GREEN = 24
 
 # FeliCa待ち受けの1サイクル秒
 TIME_cycle = 1.0
@@ -21,20 +21,53 @@ TIME_interval = 0.2
 # タッチされてから次の待ち受けを開始するまで無効化する秒
 TIME_wait = 3
 
-#def light_up(color):
-#    GPIO.setmode(GPIO.BCM)
-#    GPIO.setup(color, GPIO.OUT)
+def buzzer():
+        chan= 21
+        freq = 3000
 
-#    GPIO.output(color, GPIO.HIGH)
-#    time.sleep(0.5)
-#    GPIO.output(color, GPIO.LOW)
-#    time.sleep(0.5)
-#    GPIO.output(color, GPIO.HIGH)
-#    time.sleep(0.5)
-#    GPIO.output(color, GPIO.LOW)
-#    time.sleep(0.5)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(chan, GPIO.OUT)
+        GPIO.setup(GREEN, GPIO.OUT)
 
-#    GPIO.cleanup()
+        # ピッと鳴る
+        pwm = GPIO.PWM(chan, freq)
+        pwm.start(50)
+        GPIO.output(GREEN, GPIO.HIGH)
+        time.sleep(0.03)
+        pwm.stop()
+        time.sleep(0.47)
+        GPIO.output(GREEN, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(GREEN, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(GREEN, GPIO.LOW)
+        time.sleep(0.5)
+
+        GPIO.cleanup()
+
+def error():
+        chan= 21
+        freq = 50
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(chan, GPIO.OUT)
+        GPIO.setup(RED, GPIO.OUT)
+
+        # ピッと鳴る
+        pwm = GPIO.PWM(chan, freq)
+        pwm.start(50)
+        GPIO.output(RED, GPIO.HIGH)
+        time.sleep(0.3)
+        pwm.stop()
+        time.sleep(0.2)
+        GPIO.output(RED, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(RED, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(RED, GPIO.LOW)
+        time.sleep(0.5)
+
+        GPIO.cleanup()
 
 def felica_waiting():
     # NFC接続リクエストのための準備
@@ -71,10 +104,24 @@ def felica_waiting():
     #end while
     return -1
 
-
+# members テーブルの中に idm が
+# 登録されていれば      (sid, name)
+# 登録されていなければ  false
+def search_idm(idm):
+    conn = sqlite3.connect('../server/db/data.db')
+    c = conn.cursor()
+    sql = 'select sid,name from members where idm="' + str(idm) + '"'
+    for row in c.execute(sql):
+        return row
+    #print("error : idm is not exist in members table")
+    return False
 
 
 idm = felica_waiting()
-#light_up(GREEN)
-print(idm)
+if search_idm(idm) == False:
+    print(idm)
+    buzzer()
+else:
+    print("すでに存在しているIDmです\nやり直してください")
+    error()
 
