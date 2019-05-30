@@ -8,6 +8,11 @@ import time
 from threading import Thread, Timer
 import datetime
 import sqlite3
+# import RPi.GPIO as GPIO
+
+#GPIOのピン設定
+# RED = 25
+# GREEN = 24
 
 # FeliCa待ち受けの1サイクル秒
 TIME_cycle = 1.0
@@ -15,6 +20,21 @@ TIME_cycle = 1.0
 TIME_interval = 0.2
 # タッチされてから次の待ち受けを開始するまで無効化する秒
 TIME_wait = 3
+
+# def light_up(color):
+#     GPIO.setmode(GPIO.BCM)
+#     GPIO.setup(color, GPIO.OUT)
+
+#     GPIO.output(color, GPIO.HIGH)
+#     time.sleep(0.5)
+#     GPIO.output(RED, GPIO.LOW)
+#     time.sleep(0.5)
+#     GPIO.output(color, GPIO.HIGH)
+#     time.sleep(0.5)
+#     GPIO.output(RED, GPIO.LOW)
+#     time.sleep(0.5)
+
+#     GPIO.cleanup()
 
 def felica_waiting():
     # NFC接続リクエストのための準備
@@ -41,8 +61,8 @@ def felica_waiting():
             #IDmを取り出す
             idm = binascii.hexlify(tag.idm)
             #print 'FeliCa detected. idm = ' + idm
+            # light_up(GREEN)
             clf.close()
-            time.sleep(TIME_wait)
             return idm
 
         #end if
