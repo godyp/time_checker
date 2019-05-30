@@ -21,20 +21,68 @@ TIME_interval = 0.2
 # タッチされてから次の待ち受けを開始するまで無効化する秒
 TIME_wait = 5
 
-def light_up(color):
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(color, GPIO.OUT)
+def buzzer():
+        chan= 21
+        freq = 3000
 
-    GPIO.output(color, GPIO.HIGH)
-    time.sleep(0.5)
-    GPIO.output(color, GPIO.LOW)
-    time.sleep(0.5)
-    GPIO.output(color, GPIO.HIGH)
-    time.sleep(0.5)
-    GPIO.output(color, GPIO.LOW)
-    time.sleep(0.5)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(chan, GPIO.OUT)
+        GPIO.setup(GREEN, GPIO.OUT)
 
-    GPIO.cleanup()
+        # ピッと鳴る
+        pwm = GPIO.PWM(chan, freq)
+        pwm.start(50)
+        GPIO.output(GREEN, GPIO.HIGH)
+        time.sleep(0.03)
+        pwm.stop()
+        time.sleep(0.47)
+        GPIO.output(GREEN, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(GREEN, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(GREEN, GPIO.LOW)
+        time.sleep(0.5)
+
+        GPIO.cleanup()
+
+def error():
+        chan= 21
+        freq = 50
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(chan, GPIO.OUT)
+        GPIO.setup(RED, GPIO.OUT)
+
+        # ピッと鳴る
+        pwm = GPIO.PWM(chan, freq)
+        pwm.start(50)
+        GPIO.output(RED, GPIO.HIGH)
+        time.sleep(0.3)
+        pwm.stop()
+        time.sleep(0.2)
+        GPIO.output(RED, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(RED, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(RED, GPIO.LOW)
+        time.sleep(0.5)
+
+        GPIO.cleanup()
+
+#def light_up(color):
+#    GPIO.setmode(GPIO.BCM)
+#    GPIO.setup(color, GPIO.OUT)
+
+#    GPIO.output(color, GPIO.HIGH)
+#    time.sleep(0.5)
+#    GPIO.output(color, GPIO.LOW)
+#    time.sleep(0.5)
+#    GPIO.output(color, GPIO.HIGH)
+#    time.sleep(0.5)
+#    GPIO.output(color, GPIO.LOW)
+#    time.sleep(0.5)
+
+#    GPIO.cleanup()
 
 
 def felica_waiting():
@@ -44,7 +92,7 @@ def felica_waiting():
     # 0003(Suica)
     # target_req_felica.sensf_req = bytearray.fromhex("0000030000")
 
-    time.sleep(TIME_wait)
+    #time.sleep(TIME_wait)
 
     print ('FeliCa waiting...')
     while True:
@@ -125,10 +173,10 @@ def check_intime(sid):
 def search_idm(idm):
     sql = 'select sid,name from members where idm="' + str(idm) + '"'
     for row in c.execute(sql):
-        light_up(GREEN)
+        buzzer()
         return row
     print("error : idm is not exist in members table")
-    light_up(RED)
+    error()
     return False
 
 # status テーブルの中に sid が
@@ -180,6 +228,7 @@ while True:
     # 登録済：緑のLEDを光らせる
     row_mem = search_idm(idm)
     if row_mem == False:
+        time.sleep(3)
         continue
 
     # in_time が存在しなければ in_time を記録する
@@ -203,3 +252,4 @@ while True:
 
     conn.close()
 
+    time.sleep(3)
