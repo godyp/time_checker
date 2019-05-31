@@ -23,7 +23,7 @@ if(isset($_POST['datapost'])){
   if($count == 0){
     header('Location:error.php');
   }else{
-    header('Location:edit.php');
+    header('Location:history.php');
   }
 }
 $pdo = NULL; //DB接続解除

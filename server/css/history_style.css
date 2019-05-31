@@ -69,10 +69,7 @@ header{
     box-shadow:0 0 10px #ccc;
 }
 
-.state th{
-    width: 60px;   
-}.state td {
-    width: 100px;
+.state th, .state td {
     border: solid 2px #666;
 }
 
@@ -86,13 +83,10 @@ header{
 }
 
 .state th:first-child{
-    width:20%;
+    width:30%;
 }
 
-.state th:first-child{
-    width:20%;
-}
-
+.state th:first-child,
 .state td:first-child{
     border-left: none;
 }
