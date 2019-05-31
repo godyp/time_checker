@@ -1,17 +1,19 @@
 <?php
 session_start();
-try{
+try {
   $pdo = new PDO('sqlite:./../db/data.db');
   $pdo->exec('CREATE TABLE IF NOT EXISTS member(id INTEGER PRIMARY KEY, name TEXT, status INT)');
   //$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   //$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-  }catch(PDOException $e){
-      exit('Connection failed:'.$e->getMessage());
-    }
+} catch (PDOException $e) {
+  exit('Connection failed:' . $e->getMessage());
+}
 
-if(isset($_POST['datapost'])){
+$matches;
+if (isset($_POST['datapost'])) {
   $_SESSION['id'] = $_POST['id'];
   $id = $_SESSION['id'];
+<<<<<<< HEAD
   $id = intval($id);
   echo $id;
   //$stmt = $pdo->prepare("SELECT * FROM member WHERE id = ?");
@@ -31,10 +33,11 @@ $pdo = NULL; //DB接続解除
 
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charse="UTF-8">
-    <title>Time Checker</title>
-    <link rel="stylesheet" href="./../css/login_style.css">
+
+<head>
+  <meta charse="UTF-8">
+  <title>Time Checker</title>
+  <link rel="stylesheet" href="./../css/login_style.css">
 </head>
 
 <body>
@@ -42,19 +45,28 @@ $pdo = NULL; //DB接続解除
     <header>
       <div class="container">
         <h1 class="header-left">ログイン</h1>
+        <h2 class="header-left">~田中・林研　勤怠管理システム~</h2>
+        <div class="btn header-right"><a href="../index.php">戻る</a></div>
       </div>
     </header>
-  <form action="" method="post" autocomplete="off">
-    <table border="1">
-      <tr>
-        <td>学籍番号</td>
-        <td><input type="text" name="id" maxlength="8"></td>
-        <td colspan="2" align="center">
-          <input type="submit" name= "datapost" value="ログイン">
-        </td>
-      </tr>
-    </table>
-  </form>
-</div>
+    <div class="container">
+      <form action="" method="post" autocomplete="off">
+        <table>
+          <tr>
+            <td>学籍番号</td>
+            <td><input class="input-sid" type="text" name="id" maxlength="8" autofocus></td>
+          </tr>
+        </table>
+        <input class="btn login" type="submit" name="datapost" value="ログイン">
+        <?php
+        global $matches;
+        if ($matches) {
+          echo '<p class="error1">※8桁の学籍番号を入力してください</p>';
+        }
+        ?>
+      </form>
+    </div>
+  </div>
 </body>
+
 </html>

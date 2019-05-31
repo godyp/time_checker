@@ -69,22 +69,6 @@ def error():
 
         GPIO.cleanup()
 
-#def light_up(color):
-#    GPIO.setmode(GPIO.BCM)
-#    GPIO.setup(color, GPIO.OUT)
-
-#    GPIO.output(color, GPIO.HIGH)
-#    time.sleep(0.5)
-#    GPIO.output(color, GPIO.LOW)
-#    time.sleep(0.5)
-#    GPIO.output(color, GPIO.HIGH)
-#    time.sleep(0.5)
-#    GPIO.output(color, GPIO.LOW)
-#    time.sleep(0.5)
-
-#    GPIO.cleanup()
-
-
 def felica_waiting():
     # NFC接続リクエストのための準備
     # 212F(FeliCa)で設定
@@ -92,7 +76,6 @@ def felica_waiting():
     # 0003(Suica)
     # target_req_felica.sensf_req = bytearray.fromhex("0000030000")
 
-    #time.sleep(TIME_wait)
 
     print ('FeliCa waiting...')
     while True:
@@ -252,4 +235,4 @@ while True:
 
     conn.close()
 
-    time.sleep(3)
+    time.sleep(1)

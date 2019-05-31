@@ -28,7 +28,6 @@ $res = $db->query($sql);
                 <h1 class="header-left">HOME</h1>
                 <h2 class="header-left">~田中・林研　勤怠管理システム~</h2>
                 <a class="header-right" href="./pages/login.php">ログイン</a>
-                <a class="header-right" href="./pages/signup.php">新規登録</a>
             </div>
         </header>
         <div class="db-table">

@@ -93,6 +93,7 @@ header{
     width:20%;
 }
 
+.state th:first-child,
 .state td:first-child{
     border-left: none;
 }
