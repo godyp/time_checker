@@ -13,7 +13,6 @@ $matches;
 if (isset($_POST['datapost'])) {
   $_SESSION['id'] = $_POST['id'];
   $id = $_SESSION['id'];
-<<<<<<< HEAD
   $id = intval($id);
   echo $id;
   //$stmt = $pdo->prepare("SELECT * FROM member WHERE id = ?");

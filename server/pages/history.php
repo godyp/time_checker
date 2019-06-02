@@ -80,6 +80,40 @@ function GetLatestMonth(){
     return intval($latest_month);
 }
 
+function GetaStayingTime($month, $year){
+    global $pdo;
+    global $id;
+    $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ? AND in_month = ? AND in_year = ? ORDER BY in_day ASC");
+    $stmt->bindValue(1, $id);
+    $stmt->bindValue(2, $month);
+    $stmt->bindValue(3, $year);
+    $stmt->execute();
+    $history = $stmt->fetchAll();
+    $history_cnt = count($history);
+
+    if($history_cnt==0)return -1;
+
+    $staying_history = array();
+    $days = array();
+    for($i=0;$i<7;$i++){
+        $in_hour= intval($history[$i]['in_hour']);
+        $out_hour= intval($history[$i]['out_hour']);
+        if( $history[$i]['in_day'] === $history[$i]['out_day']){
+            $staying_time = $out_hour - $in_hour + 1;
+        }else{
+            $staying_time = (24 - $in_hour) + $out_hour +1 ;
+        }
+        $staying_history[] = strval($staying_time);
+        $days[] = $history[$i]['in_day'];
+    }
+
+    $staying_history_csv = implode(",",$staying_history);
+    $days_csv = implode(",",$days);
+
+    return [$staying_history_csv, $days_csv];
+}
+
+
 if(isset($_POST['datapost'])){
     $_SESSION['date'] = $_POST['date'];
     $date = $_SESSION['date'];
@@ -95,7 +129,6 @@ if(isset($_POST['datapost'])){
     <meta charset="UTF-8">
     <title>Time Checker</title>
     <link rel="stylesheet" href="./../css/history_style.css">
-    <script  src="./../js/edit.js"></script>
 </head>
 
 <body>
@@ -111,10 +144,57 @@ if(isset($_POST['datapost'])){
 
     <div class="db-table">
             <div class="container">
-                <h3>履歴一覧</h3>
-                    <?php
+                <?php
                     $latest_year = GetLatestYear();
                     $latest_month = GetLatestMonth();
+                    $graphdata_csv = GetaStayingTime($latest_month, $latest_year);
+                    ?>
+
+                <canvas id="myChart"></canvas>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+                    <script>
+                    var　times_csv = "<?php echo $graphdata_csv[0] ?>";
+                    var times = times_csv .split(",", -1)
+                    times = times.map(function( value ){
+                        return parseInt(value);
+                    });
+
+                    var　days_csv = "<?php echo $graphdata_csv[1] ?>";
+                    var days = days_csv.split(",", -1);　
+
+                    // グラフ化するデータ系列のサンプル
+                    const sampleData = {
+                        labels: days, // ラベル(X軸)
+                        data: times, // データ系列
+                    };
+
+                    const loadCharts = function () {
+                        const chartDataSet = {
+                            type: 'line',
+                            data: {
+                                labels: sampleData.labels,
+                                datasets: [{
+                                    label: 'hour',
+                                    data: sampleData.data,
+                                    lineTension: 0, // draw straightline
+                                }]
+                            },
+                            options: {
+                                title: {
+                                    display: true,
+                                    text: '滞在時間の推移',
+                                    fontSize: 16,
+                                }
+                            }
+                        };
+                            var ctx = document.getElementById("myChart");
+                            new Chart(ctx, chartDataSet);
+                        };
+
+                        loadCharts();
+                    </script>
+                    <h3>履歴一覧</h3>
+                    <?php
                     do{
                         $exist = ShowMonthHistory($latest_month,$latest_year);
                         $latest_month-=1;
