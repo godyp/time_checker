@@ -166,10 +166,10 @@ def insert_members(idm):
 def search_idm(idm):
     sql = 'select sid,name from members where idm="' + str(idm) + '"'
     for row in c.execute(sql):
-        buzzer()
+        error()
         return row
     # print("error : idm is not exist in members table")
-    error()
+    buzzer()
     return False
 
 
