@@ -13,20 +13,6 @@ $matches;
 if (isset($_POST['datapost'])) {
   $_SESSION['id'] = $_POST['id'];
   $id = $_SESSION['id'];
-<<<<<<< HEAD
-  $id = intval($id);
-  echo $id;
-  //$stmt = $pdo->prepare("SELECT * FROM member WHERE id = ?");
-  $stmt = $pdo->prepare("SELECT COUNT(*) FROM members WHERE sid = ?");
-  $stmt->bindValue(1, $id);
-  $stmt->execute();
-  $count =  $stmt->fetchColumn();
-  $data = $stmt->fetch();
-  if($count == 0){
-    header('Location:error.php');
-  }else{
-    header('Location:history.php');
-=======
   if (preg_match('/[0-9]{8}/u', strval($id), $matches)) {
     $id = intval($id);
     echo $id;
@@ -43,7 +29,6 @@ if (isset($_POST['datapost'])) {
     }
   } else {
     $matches = -1;
->>>>>>> f074dc128a6902396037d91a841e2fcfdcca03fd
   }
 }
 
