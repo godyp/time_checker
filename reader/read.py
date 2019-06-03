@@ -181,11 +181,11 @@ def record_out_time(row_sts):
 # status テーブルの中に sid が
 # 存在すれば     true
 # 存在しなければ false
-def check_intime(sid):
-    sql = 'select in_time from status where id="' + str(sid) + '"'
-    for row in c.execute(sql):
-        return True
-    return False
+# def check_intime(sid):
+#     sql = 'select in_time from status where id="' + str(sid) + '"'
+#     for row in c.execute(sql):
+#         return True
+#     return False
 
 # members テーブルの中に idm が
 # 登録されていれば      (sid, name)
