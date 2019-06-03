@@ -10,7 +10,6 @@ import datetime
 import sqlite3
 
 
-
 # tableを表示する
 def select_table(table):
     sql = 'select * from "' + str(table) + '"'
