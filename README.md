@@ -1,6 +1,6 @@
 #目次
-* **1 [Time Checkerの使い方](https://bitbucket.org/tanakalabo/time_checker/wiki/Time%20Checker%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9)
-* **2 [http://192.168.11.120:3000](http://192.168.11.120:3000)
+* 1 [Time Checkerの使い方](https://bitbucket.org/tanakalabo/time_checker/wiki/Time%20Checker%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9)
+* 2 [http://192.168.11.120:3000](http://192.168.11.120:3000)
 
 
 # time_checker
