@@ -12,9 +12,9 @@ $res = $db->query($sql);
 
 if (isset($_POST["sub"])) {
     $sql = "SELECT count(*) FROM message";
-    $cnt = $db->query($sql);
+    $cnt = $db->query($sql)->fetchArray();
     $rep = $_POST["report"];
-    $sql = "INSERT INTO message VALUES(" . strval($cnt) . ",'" . strval($rep) . "', 0)";
+    $sql = "INSERT INTO message VALUES(" . strval($cnt[0]) . ",\"" . strval($rep) . "\", 0)";
     $db->query($sql);
 }
 ?>
