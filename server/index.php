@@ -5,7 +5,7 @@ $sql = null;
 $res = null;
 $row = null;
 
-$db = new SQLite3("./db/data.db");
+$db = new SQLite3("../../db/data.db");
 // データの取得
 $sql = "SELECT name,sid FROM members ORDER BY sid ASC";
 $res = $db->query($sql);

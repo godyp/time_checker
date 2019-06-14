@@ -238,7 +238,7 @@ def search_sid(sid):
 # status(sid INTEGER, name TEXT, in_year TEXT, in_month TEXT, in_day TEXT, in_hour TEXT, in_minute TEXT)
 # history(sid INTEGER, name TEXT, in_year TEXT, in_month TEXT, in_day TEXT, in_hour TEXT, in_minute TEXT, out_year TEXT, out_month TEXT, out_day TEXT, out_hour TEXT, out_minute TEXT)
 while True:
-    conn = sqlite3.connect('../server/db/data.db')
+    conn = sqlite3.connect('../../db/data.db')
     c = conn.cursor()
     #FeliCaの待機
     idm = felica_waiting()

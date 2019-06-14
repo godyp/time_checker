@@ -1,7 +1,7 @@
 <?php
 session_start();
 try{
-    $pdo = new PDO('sqlite:./../db/data.db');
+    $pdo = new PDO('sqlite:../../../db/data.db');
     $pdo->exec('CREATE TABLE IF NOT EXISTS member(id INTEGER PRIMARY KEY, name TEXT, status INT)');
     //$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

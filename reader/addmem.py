@@ -183,7 +183,7 @@ def search_idm(idm):
 # members(idM TEXT, name TEXT, sid INTEGER)
 #FeliCaをタッチして学籍番号と前を入力
 print("\n[[[Sign up]]]")
-conn = sqlite3.connect('../server/db/data.db')
+conn = sqlite3.connect('../../db/data.db')
 c = conn.cursor()
 idm = felica_waiting()
 if(idm != -1):

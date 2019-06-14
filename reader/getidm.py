@@ -144,7 +144,7 @@ def felica_waiting():
 # 登録されていれば      (sid, name)
 # 登録されていなければ  false
 def search_idm(idm):
-    conn = sqlite3.connect('../server/db/data.db')
+    conn = sqlite3.connect('../../db/data.db')
     c = conn.cursor()
     sql = 'select sid,name from members where idm="' + str(idm) + '"'
     for row in c.execute(sql):
