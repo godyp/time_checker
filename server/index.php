@@ -9,6 +9,14 @@ $db = new SQLite3("../../db/data.db");
 // データの取得
 $sql = "SELECT name,sid FROM members ORDER BY sid ASC";
 $res = $db->query($sql);
+
+if (isset($_POST["sub"])) {
+    $sql = "SELECT count(*) FROM message";
+    $cnt = $db->query($sql);
+    $rep = $_POST["report"];
+    $sql = "INSERT INTO message VALUES(" . strval($cnt) . ",'" . strval($rep) . "', 0)";
+    $db->query($sql);
+}
 ?>
 
 
@@ -27,11 +35,11 @@ $res = $db->query($sql);
             <div class="container">
                 <h1 class="header-left">HOME</h1>
                 <h2 class="header-left">~田中・林研　勤怠管理システム~</h2>
-                <a class="header-right" href="./pages/login.php">ログイン</a>
+                <a class="btn" href="./pages/login.php">ログイン</a>
             </div>
         </header>
-        <div class="db-table">
-            <div class="container">
+        <div class="container">
+            <div class="db-table">
                 <h3>現在の状態</h3>
                 <table class="state">
                     <tr>
@@ -57,6 +65,42 @@ $res = $db->query($sql);
                     }
                     ?>
                 </table>
+            </div>
+        </div>
+        <div>
+            <div class="container">
+                <div class="message">
+                    <form class="area" method="post">
+                        <p>[Message]</p>
+                        <textarea class="text" name="report" rows="4" cols="40" placeholder="エラー報告／欲しい機能"></textarea><br>
+                        <input class="message-btn" type="submit" value="送信" name="sub"><input class="message-btn" type="reset" value="リセット">
+                    </form>
+                    <div class="">
+                        <div class="task">
+                            <?php
+                            // データの取得
+                            $sql = "SELECT message,status FROM message";
+                            $res = $db->query($sql);
+                            echo '<ul class="info">';
+                            echo "未解決";
+                            while ($row = $res->fetchArray()) {
+                                if ($row[1] == 0) {
+                                    echo '<li>' . $row[0] . '</li>';
+                                }
+                            }
+                            echo '</ul>';
+                            echo '<ul class="info">';
+                            echo "解決済み";
+                            while ($row = $res->fetchArray()) {
+                                if ($row[1] == 1) {
+                                    echo '<li>' . $row[0] . '</li>';
+                                }
+                            }
+                            echo ' </ul>';
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

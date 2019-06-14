@@ -10,11 +10,15 @@ body {
   background-position: right bottom;
 }
 
+textarea{
+  outline: 0;
+}
+
 .clear {
   clear: both;
 }
 
-ul,
+
 ol {
   list-style: none;
   padding:0;
@@ -52,7 +56,7 @@ header {
   margin-bottom: 0;
 }
 
-.main .header-right{
+.main .btn{
   display: inline-block;
   height: 30px;
   line-height: 30px;
@@ -67,16 +71,16 @@ header {
   transition: opacity 0.3s;
 }
 
-.main .header-right + .header-right{
+.main .btn + .btn{
   margin-right: 30px;
 }
 
-.main .header-right:hover{
+.main .btn:hover{
   cursor: pointer;
   opacity: 0.7;
 }
 
-.main .header-right:active{
+.main .btn:active{
   position: relative;
   top: 3px;
   box-shadow: none;
@@ -88,6 +92,12 @@ header {
   font-size: 50px;
 }
 
+/* statusテーブル */
+.db-table{
+  float:left;
+  width: 50%;
+}
+
 .state {
   border-collapse: separate;
   border: 2px solid #666;
@@ -95,8 +105,8 @@ header {
   border-radius: 5px;
   overflow: hidden;
   background-color: white;
-  width: 50%;
-  box-shadow: 0 0 10px #ccc;
+  width: 100%;
+  box-shadow: 0 0 10px #999;
 }
 
 .state th,
@@ -137,5 +147,63 @@ header {
 
 .state td {
   border-top: none;
+}
+
+
+
+/* message欄のスタイル */
+
+.message{
+  float: right;
+  width: 50%;
+}
+
+.area{
+  text-align:center;
+}
+
+.task{
+  width:60%;
+  margin:20px auto;
+}
+
+.info{
+  border:1px solid #999;
+  border-radius:5px;
+  box-shadow:0 0 5px #999;
+}
+
+.message-btn{
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  width: 70px;
+  margin-right:10px;
+  text-align: center;
+  /* margin-top: 35px; */
+  background-color: #999;
+  border-radius: 5px;
+  color: white;
+  /* float: right; */
+  box-shadow: 0 3px #666;
+  transition: opacity 0.3s;
+  border: none;
+}
+
+.main .message-btn:hover{
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.main .message-btn:active{
+  position: relative;
+  top: 3px;
+  box-shadow: none;
+}
+
+.text{
+  border-radius:5px;
+  border:1px solid #666;
+  box-shadow:0 0 5px #999;
 }
 
