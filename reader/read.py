@@ -174,7 +174,7 @@ def record_out_time(row_sts):
     out_time = datetime.datetime.now()
     data = (out_time.year, out_time.month, out_time.day, out_time.hour, out_time.minute, out_time.second)
     values = row_sts + data
-    c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
+    c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
     sql = 'delete from status where sid="' + str(sid) + '"'
     c.execute(sql)
 
