@@ -165,16 +165,16 @@ def insert_members(idm):
 # status テーブルに行を追加
 def record_in_time(row_mem):
     in_time = datetime.datetime.now()
-    data = (in_time.year, in_time.month, in_time.day, in_time.hour, in_time.minute)
+    data = (in_time, in_time.year, in_time.month, in_time.day, in_time.hour, in_time.minute, in_time.second)
     values = row_mem + data
-    c.execute("INSERT INTO status VALUES (?,?,?,?,?,?,?)", values)
+    c.execute("INSERT INTO status VALUES (?,?,?,?,?,?,?,?,?)", values)
 
 # status テーブルから行を削除し、history テーブルに行を追加する
 def record_out_time(row_sts):
     out_time = datetime.datetime.now()
-    data = (out_time.year, out_time.month, out_time.day, out_time.hour, out_time.minute)
+    data = (out_time.year, out_time.month, out_time.day, out_time.hour, out_time.minute, out_time.second)
     values = row_sts + data
-    c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", values)
+    c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
     sql = 'delete from status where sid="' + str(sid) + '"'
     c.execute(sql)
 
