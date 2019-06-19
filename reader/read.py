@@ -200,10 +200,10 @@ def search_idm(idm):
     return False
 
 # status テーブルの中に sid が
-# 存在すれば     (sid, name, in_year, in_month, in_day, in_hour, in_minute)
+# 存在すれば     (sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute)
 # 存在しなければ false
 def search_sid(sid):
-    sql = 'select sid,name, in_year, in_month, in_day, in_hour, in_minute from status where sid="' + str(sid) + '"'
+    sql = 'select sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute from status where sid="' + str(sid) + '"'
     for row in c.execute(sql):
         return row
     return False
