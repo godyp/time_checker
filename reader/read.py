@@ -174,7 +174,7 @@ def record_out_time(row_sts):
     out_time = datetime.datetime.now()
     data = (out_time.year, out_time.month, out_time.day, out_time.hour, out_time.minute, out_time.second)
     values = row_sts + data
-    c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
+    c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
     sql = 'delete from status where sid="' + str(sid) + '"'
     c.execute(sql)
 
@@ -200,10 +200,10 @@ def search_idm(idm):
     return False
 
 # status テーブルの中に sid が
-# 存在すれば     (sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute)
+# 存在すれば     (sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute, in_sec)
 # 存在しなければ false
 def search_sid(sid):
-    sql = 'select sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute from status where sid="' + str(sid) + '"'
+    sql = 'select sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute, in_sec from status where sid="' + str(sid) + '"'
     for row in c.execute(sql):
         return row
     return False
