@@ -221,7 +221,7 @@ def record_out_time(row_sts):
 def search_idm(idm):
     sql = 'select sid,name from members where idm="' + str(idm) + '"'
     for row in c.execute(sql):
-        if search_sid() == False: buzzer()
+        if search_sid(row[0]) == False: buzzer()
         else: buzzer_out()
         return row
     print("error : idm is not exist in members table")
