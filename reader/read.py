@@ -50,7 +50,7 @@ def buzzer():
 
         GPIO.cleanup()
 
-def buzzer_put():
+def buzzer_out():
         chan= 21
         freq = 3000
 
@@ -221,7 +221,8 @@ def record_out_time(row_sts):
 def search_idm(idm):
     sql = 'select sid,name from members where idm="' + str(idm) + '"'
     for row in c.execute(sql):
-        buzzer()
+        if search_sid == False: buzzer()
+        else: buzzer_out()
         return row
     print("error : idm is not exist in members table")
     error()
@@ -233,7 +234,6 @@ def search_idm(idm):
 def search_sid(sid):
     sql = 'select sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute, in_sec from status where sid="' + str(sid) + '"'
     for row in c.execute(sql):
-        buzzer()
         return row
     return False
 
