@@ -50,6 +50,34 @@ def buzzer():
 
         GPIO.cleanup()
 
+def buzzer_put():
+        chan= 21
+        freq = 3000
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(chan, GPIO.OUT)
+        GPIO.setup(GREEN, GPIO.OUT)
+
+        # ピッと鳴る
+        pwm = GPIO.PWM(chan, freq)
+        pwm.start(50)
+        GPIO.output(GREEN, GPIO.HIGH)
+        time.sleep(0.03)
+        pwm.stop()
+        time.sleep(0.01)
+        pwm.start(50)
+        time.sleep(0.03)
+        pwm.stop()
+        time.sleep(0.43)
+        GPIO.output(GREEN, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(GREEN, GPIO.HIGH)
+        time.sleep(0.5)
+        GPIO.output(GREEN, GPIO.LOW)
+        time.sleep(0.5)
+
+        GPIO.cleanup()
+
 def error():
         chan= 21
         freq = 50
@@ -205,6 +233,7 @@ def search_idm(idm):
 def search_sid(sid):
     sql = 'select sid, name, timestamp, in_year, in_month, in_day, in_hour, in_minute, in_sec from status where sid="' + str(sid) + '"'
     for row in c.execute(sql):
+        buzzer()
         return row
     return False
 
