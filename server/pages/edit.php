@@ -28,67 +28,89 @@ function ShowOneDayHistory(){
     global $year, $month, $day;
 
     echo '<h4>'.$year.'年'.$month.'月'.$day.'日の編集<h4>';
-    $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ? AND in_year = ? AND in_month = ? AND in_day = ?");
+    $date = sprintf('%04s-%02s-%02s%%',$year, $month, $day);
+    $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ? AND timestamp LIKE ? ORDER BY timestamp ASC");
     $stmt->bindValue(1, $id);
-    $stmt->bindValue(2, $year);
-    $stmt->bindValue(3, $month);
-    $stmt->bindValue(4, $day);
+    $stmt->bindValue(2, $date);
     $stmt->execute();
     $date_history = $stmt->fetchAll();
     $history_cnt = count($date_history);
-
 
     if($history_cnt==0){
         echo '<h1>選択した日のデータはありません</h1>';
         return -1;
     }
 
-    echo '<table class="state"> <tr> <th>入室時刻</th> <th>変更後時刻</th> <th>退室時刻</th> <th>変更後時刻</th> <th>滞在時間</th></tr>';
+    echo '<table class="state"> <tr> <th>入室時刻</th> <th>退室時刻</th> <th>滞在時間</th> <th></th> </tr>';
     for($i=0;$i<$history_cnt;$i++){
         $in_time = str_pad($date_history[$i]['in_hour'], 2, 0, STR_PAD_LEFT).":". str_pad($date_history[$i]['in_minute'], 2, 0, STR_PAD_LEFT);
         $out_time = str_pad($date_history[$i]['out_hour'], 2, 0, STR_PAD_LEFT).":". str_pad($date_history[$i]['out_minute'], 2, 0, STR_PAD_LEFT);
-
-
+        $timestamp = $date_history[$i]['timestamp'];
         echo '<tr>';//行始まり
         echo '<td>'.$in_time .'</td>';//1列目
-
-        echo '<form method="POST" action="update.php">';
-        echo '<td>'; 
-        echo '<input type="time" name="intime" value='.$in_time.'>';
-        echo '<input type="hidden" name="pre_intime" value='.$in_time.'>';
-        //echo '<input type="time" name="intime" value="13:40">';
-        echo '<input type="submit" name= "in_datapost" value="更新">';
-        echo '</td>';
-        echo '</form>';//2列目
-
-        echo '<td>'.$out_time.'</td>';//３列目
-
-        echo '<form method="POST" action="update.php">';
-        echo '<td>';
-        echo '<input type="time" name= "outtime" value='.$out_time.'>';
-        echo '<input type="hidden" name="pre_outtime" value='.$out_time.'>';
-        echo '<input type="submit" name= "out_datapost" value="更新">';
-        echo '</td>';
-        echo '</form>';//4行目
+        echo '<td>'.$out_time.'</td>';//2列目
 
         $in_hour= intval($date_history[$i]['in_hour']);
         $out_hour= intval($date_history[$i]['out_hour']);
-        if( $date_history[$i]['in_day'] === $date_history[$i]['out_day']){
-            $staying_time = $out_hour - $in_hour + 1;
+        $in_min= intval($date_history[$i]['in_minute']);
+        $out_min= intval($date_history[$i]['out_minute']);
+
+        if($in_hour < $out_hour){
+            if($in_min <= $out_min){
+                $staying_time = $out_hour - $in_hour;
+                $staying_min = $out_min -$in_min;
+                if($staying_min>30)$staying_time+=1;
+            }else{
+                $staying_time = $out_hour - $in_hour - 1;
+                $staying_min = 60 - $in_min + $out_min;
+                if($staying_min>30)$staying_time+=1;
+            }
+
+        }elseif($in_hour > $out_hour){
+            if($in_min <= $out_min){
+                $staying_time = 24 - $in_hour + $out_hour;
+                $staying_min = $out_min -$in_min;
+                if($staying_min>30)$staying_time+=1;
+            }else{
+                $staying_time = 24 -  $in_hour + $out_hour - 1;
+                $staying_min = 60 - $in_min + $out_min;
+                if($staying_min>30)$staying_time+=1;
+            }
+
         }else{
-            $staying_time = (24 - $in_hour) + $out_hour +1 ;
+            if($in_min <= $out_min){
+                $staying_time = 0;
+                $staying_min = $out_min - $in_min;
+                if($staying_min>30)$staying_time+=1;
+            }else{
+                $staying_time = 23;
+                $staying_min = 60 - $in_min + $out_min;
+                if($staying_min>30)$staying_time+=1;
+            }
         }
 
-        echo '<td>'.$staying_time.'<selet id="sel1"></select>'.'</td>';//5列目
+        echo '<td>'.$staying_time.'<selet id="sel1"></select>'.'</td>';//3列目
+        $timestamp = str_replace(' ', '_', $timestamp);
+
+        echo '<td>';
+        echo '<form method="POST" action="">';
+        echo '<input type="hidden" name="timestamp" value='.$timestamp.'>';
+        echo '<input class="btn-gradient-radius" type="submit" name="select" value="編集">';
+        echo '</form>';
+        echo '</td>';//4列目
+
         echo '</tr>';//行終わり
+
     }
     echo '</table>';
     return intval($history_cnt);
 }
 
-// if(isset($_POST['datapost'])){
-//     header('Location:update.php');
-// }
+if(isset($_POST['select'])){
+    $_SESSION['timestamp'] = $_POST['timestamp'];
+    //$date = $_SESSION['date'];
+    header('Location:update.php');
+  }
 ?>
 
 <!DOCTYPE html>
@@ -98,7 +120,6 @@ function ShowOneDayHistory(){
     <meta charset="UTF-8">
     <title>Time Checker ~EDIT~</title>
     <link rel="stylesheet" href="./../css/edit_style.css">
-    <script  src="./../js/edit.js"></script>
 </head>
 
 <body>
@@ -108,6 +129,8 @@ function ShowOneDayHistory(){
                 <h2 class="header-left">
                     <?php echo $name[0] ?>さんの勤怠履歴
                 </h2>
+                <div><a href="./../index.php"  class="home"></a></div>
+                <div class="btn header-right"><a href="./history.php">戻る</a></div>
             </div>
         </header>
     </div>
@@ -115,14 +138,11 @@ function ShowOneDayHistory(){
     <div class="db-table">
         <div class="container">
             <?php
-            //echo '<form action="update.php" method="post" autocomplete="off">';
             $exist = ShowOneDayHistory($year,$month,$day);
-            //echo '</form>';
             $pdo = NULL;
             ?>
         </div>
     </div>
-    <button><a href="../index.php">GO HOME</a></button>
 </body>
 
 </html>

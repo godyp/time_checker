@@ -12,7 +12,7 @@
         <header>
             <div class="container">
                 <h2 class="header-left">
-                    存在しないユーザです
+                    NOT FOUND
                 </h2>
             </div>
         </header>

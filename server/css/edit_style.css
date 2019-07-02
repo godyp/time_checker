@@ -56,9 +56,35 @@ header{
     margin-right:30px;
     font-size:50px;
 }
+.main .btn {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 100px;
+    text-align: center;
+    margin-right: 30px;
+    background-color: #999;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 3px #666;
+    transition: opacity 0.3s;
+    border: none;
+    font-size: 16px;
+    outline: 0;
+  }
 
+  .main .btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
 
-  .state{
+  .main .btn:active {
+    position: relative;
+    top: 3px;
+    box-shadow: none;
+  }
+
+.state{
     border-collapse: separate;
     border: 2px solid #666;
     border-spacing: 0;
@@ -70,7 +96,7 @@ header{
 }
 
 .state th{
-    width: 60px;   
+    width: 60px;
 }.state td {
     width: 100px;
     border: solid 2px #666;
@@ -85,14 +111,6 @@ header{
     background-color : #ccc;
 }
 
-.state th:first-child{
-    width:20%;
-}
-
-.state th:first-child{
-    width:20%;
-}
-
 .state th:first-child,
 .state td:first-child{
     border-left: none;
@@ -100,6 +118,7 @@ header{
 
 .state th:last-child,
 .state td:last-child{
+    width:20%;
     border-right: none;
 }
 
@@ -116,18 +135,66 @@ header{
 }
 
 /*****button*****/
-.btn-right-radius {
-    position: relative;
+  .message-btn{
     display: inline-block;
-    font-weight: bold;
-    padding: 0.25em 0.5em;
+    height: 20px;
+    line-height: 20px;
+    width: 70px;
+    margin-right:10px;
+    text-align: center;
+    /* margin-top: 35px; */
+    background-color: #999;
+    border-radius: 5px;
+    color: white;
+    /* float: right; */
+    box-shadow: 0 3px #666;
+    transition: opacity 0.3s;
+    border: none;
+  }
+
+  .btn-gradient-radius {
+    display: inline-block;
+    padding: 7px 20px;
+    border-radius: 25px;
     text-decoration: none;
-    color:#333333;
-    background: #d9d8d9;
-    border-radius: 0 15px 15px 0;
+    color: #FFF;
+    background: #746e6e;
     transition: .4s;
   }
-  
-  .btn-right-radius:hover {
+
+  .btn-gradient-radius:hover {
     background: #5857575b;
+  }
+
+  .home {
+    display: inline-block;
+    width:70px;
+    height:70px;
+    line-height: 150px;
+    margin-top:10px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    color: #FFFFFF;
+    background-image: url("../img/home.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color:#999;
+    background-size:contain;
+    border-radius: 50%;
+    box-shadow: 0 3px #666;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    float:right;
+  }
+
+  .home:active{
+    position: relative;
+    top: 3px;
+    box-shadow: none;
+  }
+
+  .home:hover {
+    cursor: pointer;
+    opacity: 0.7;
   }

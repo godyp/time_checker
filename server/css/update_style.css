@@ -40,6 +40,7 @@ header{
     width:100px;
     text-align: center;
     margin-top:35px;
+    margin-right:20px;
     background-color:#999;
     border-radius: 5px;
     color: white;
@@ -56,45 +57,44 @@ header{
     margin-right:30px;
     font-size:50px;
 }
-
 .main .btn {
-  display: inline-block;
-  height: 30px;
-  line-height: 30px;
-  width: 100px;
-  text-align: center;
-  margin-right: 30px;
-  background-color: #999;
-  border-radius: 5px;
-  color: white;
-  box-shadow: 0 3px #666;
-  transition: opacity 0.3s;
-  border: none;
-  font-size: 16px;
-  outline: 0;
-}
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 100px;
+    text-align: center;
+    margin-right: 30px;
+    background-color: #999;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 3px #666;
+    transition: opacity 0.3s;
+    border: none;
+    font-size: 16px;
+    outline: 0;
+  }
 
-.main .btn:hover {
-  cursor: pointer;
-  opacity: 0.7;
-}
+  .main .btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
 
-.main .btn:active {
-  position: relative;
-  top: 3px;
-  box-shadow: none;
-}
+  .main .btn:active {
+    position: relative;
+    top: 3px;
+    box-shadow: none;
+  }
 
 
-.state{
-  border-collapse: separate;
-  border: 2px solid #666;
-  border-spacing: 0;
-  border-radius:5px;
-  overflow:hidden;
-  background-color: white;
-  width : 80%;
-  box-shadow:0 0 10px #ccc;
+  .state{
+    border-collapse: separate;
+    border: 2px solid #666;
+    border-spacing: 0;
+    border-radius:5px;
+    overflow:hidden;
+    background-color: white;
+    width : 80%;
+    box-shadow:0 0 10px #ccc;
 }
 
 .state th, .state td {
@@ -111,7 +111,7 @@ header{
 }
 
 .state th:first-child{
-    width:30%;
+    border-left: none;
 }
 
 .state th:first-child,
@@ -135,10 +135,10 @@ header{
 .state td{
     border-top: none;
 }
-
 /*****button*****/
 .btn-right-radius {
     position: relative;
+    left: 5px;
     display: inline-block;
     font-weight: bold;
     padding: 0.25em 0.5em;
@@ -151,20 +151,6 @@ header{
 
   .btn-right-radius:hover {
     background: #5857575b;
-  }
-  .btn-gradient-radius {
-    display: inline-block;
-    padding: 7px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    color: #FFF;
-    background: #333333;
-    transition: .4s;
-  }
-
-  .btn-gradient-radius:hover {
-    background: #5857575b;
-    /* background-image: linear-gradient(45deg, #FFC107 0%, #f76a35 100%); */
   }
 
   .home {
@@ -199,19 +185,20 @@ header{
     cursor: pointer;
     opacity: 0.7;
   }
-  /****DATE****/
+
+  /****TIME****/
   label {
     position: relative;
     display: inline-block;
-    width: 150px;
+    width: 100px;
     height: 36px;
     border: 2px solid #ccc;
     border-radius: 15px;
   }
-  input[type="date"] {
+  input[type="time"] {
     position: relative;
     padding: 0 10px;
-    width: 200px;
+    width: 100px;
     height: 36px;
     border: 0;
     background: transparent;
@@ -220,31 +207,14 @@ header{
     color: #999;
   }
 
-  label::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    right: -43px;
-    width: 36px;
-    height: 36px;
-    background-color: #faf6f600;
-    background-image: url("../img/calendar_icon.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    /* border-radius: 10px; */
-    background-size:contain;                               /* 画像のサイズを指定    */
-    width:35px;                                            /* 横幅のサイズを指定    */
-    height:35px;
-  }
-
-  input[type="date"]::-webkit-inner-spin-button{
+  input[type="time"]::-webkit-inner-spin-button{
     -webkit-appearance: none;
   }
-  input[type="date"]::-webkit-clear-button{
+  input[type="time"]::-webkit-clear-button{
     -webkit-appearance: none;
   }
 
-  input[type="date"]::-webkit-calendar-picker-indicator{
+  input[type="time"]::-webkit-calendar-picker-indicator{
     position: absolute;
     right: 7px;
     top: 0px;
@@ -255,3 +225,21 @@ header{
     color: transparent;
     cursor: pointer;
   }
+
+/*****js*******/
+#element_to_pop_up {
+    background-color:#fff;
+    border-radius:15px;
+    color:#000;
+    display:none;
+    padding:20px;
+    min-width:400px;
+    min-height: 180px;
+}
+.b-close{
+    cursor:pointer;
+    position:absolute;
+    right:10px;
+    top:5px;
+}
+

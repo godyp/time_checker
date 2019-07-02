@@ -60,8 +60,8 @@ $pdo = NULL; //DB接続解除
             <td>学籍番号</td>
             <td><input class="input-sid" type="text" name="id" maxlength="8" autofocus></td>
           </tr>
+          <input class="btn login" type="submit" name="datapost" value="ログイン">
         </table>
-        <input class="btn login" type="submit" name="datapost" value="ログイン">
         <?php
         global $matches;
         if ($matches) {
