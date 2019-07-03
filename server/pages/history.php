@@ -116,19 +116,16 @@ function GetaStayingTime($month, $year)
 {
     global $pdo;
     global $id;
-    $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ? AND in_month = ? AND in_year = ? ORDER BY in_day ASC");
+    $stmt = $pdo->prepare("SELECT * FROM history WHERE sid = ? ORDER BY timestamp DESC");
     $stmt->bindValue(1, $id);
-    $stmt->bindValue(2, $month);
-    $stmt->bindValue(3, $year);
     $stmt->execute();
     $history = $stmt->fetchAll();
     $history_cnt = count($history);
-
     if ($history_cnt == 0) return -1;
 
     $staying_history = array();
     $days = array();
-    for ($i = 0; $i < 7; $i++) {
+    for ($i = 13; $i >= 0; $i--) {
         $in_hour = intval($history[$i]['in_hour']);
         $out_hour = intval($history[$i]['out_hour']);
         $in_min = intval($history[$i]['in_minute']);
