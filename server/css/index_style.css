@@ -180,6 +180,7 @@ header {
   width: 70px;
   margin-right:10px;
   text-align: center;
+  outline: 0;
   /* margin-top: 35px; */
   background-color: #999;
   border-radius: 5px;
