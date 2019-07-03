@@ -9,6 +9,10 @@ a {
     text-decoration: none;
 }
 
+input{
+    outline: 0;
+}
+
 .main {
     width: 100%;
 }
