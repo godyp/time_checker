@@ -175,6 +175,7 @@ def select_table(table):
     sql = 'select sid, name from "' + str(table) + '" order by sid desc'
     for row in c.execute(sql):
         print(row)
+    print("\n\n")
 
 # members テーブルに新規登録する
 # 登録できれば          true
