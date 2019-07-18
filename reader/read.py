@@ -172,7 +172,7 @@ def felica_waiting():
 
 # tableを表示する
 def select_table(table):
-    sql = 'select * from "' + str(table) + '"'
+    sql = 'select * from "' + str(table) + 'ORDER BY sid DESC"'
     for row in c.execute(sql):
         print(row)
 
@@ -195,6 +195,7 @@ def record_in_time(row_mem):
     in_time = datetime.datetime.now()
     data = (in_time, in_time.year, in_time.month, in_time.day, in_time.hour, in_time.minute, in_time.second)
     values = row_mem + data
+    record_staying_time(values)
     c.execute("INSERT INTO status VALUES (?,?,?,?,?,?,?,?,?)", values)
 
 # status テーブルから行を削除し、history テーブルに行を追加する
@@ -202,9 +203,34 @@ def record_out_time(row_sts):
     out_time = datetime.datetime.now()
     data = (out_time.year, out_time.month, out_time.day, out_time.hour, out_time.minute, out_time.second)
     values = row_sts + data
+    record_staying_time(values)
     c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
     sql = 'delete from status where sid="' + str(sid) + '"'
     c.execute(sql)
+
+# staying timeテーブルに滞在時間を記録する
+def record_staying_time(values):
+    length = len(values) #入室:length=9  退室:length=15
+    row_time = search_staying_time(values)
+    if row_time != False:
+        if length == 9:
+            return
+        elif length == 15:
+            # 滞在時間
+            diff =  divmod((values[12]*24*60 + values[13]*60 + values[14]) - (values[6]*24*60 + values[7]*60 + values[8]), 60)
+            time = str(diff[0]) + "." + str(diff[1])
+            # staying_timeの滞在時間を取得し加算
+            update_time = int(row_time) + int(time)
+            # staying_timeをupdateする
+            sql = "update staying_time set time = " + str(update_time) + "where in_year = " + str(values[6]) + "and in_month = " + str(values[7]) + "and in_date = " + str(values[8])
+    else:
+        if length == 9:
+            in_time = (values[0], values[3], values[4], values[5], 0)
+            c.execute("INSERT INTO staying_time VALUES (?,?,?,?,?)", in_time)
+        elif length == 15:
+            return "error"
+
+
 
 # status テーブルの中に sid が
 # 存在すれば     true
@@ -224,7 +250,7 @@ def search_idm(idm):
         if search_sid(row[0]) == False: buzzer()
         else: buzzer_out()
         return row
-    print("error : idm is not exist in members table")
+    print("error : idm is not exist in members table\n")
     error()
     return False
 
@@ -236,6 +262,16 @@ def search_sid(sid):
     for row in c.execute(sql):
         return row
     return False
+
+# staying time テーブルの中に 入室時刻と同じデータ が
+# 存在すれば     (time)
+# 存在しなければ false
+def search_staying_time(values):
+    data = (values[3], values[4], values[5])
+    for row in c.execute("select time from staying_time where year = ? and month = ? and date = ?", data):
+        return row
+    return False
+
 
 
 
@@ -288,12 +324,12 @@ while True:
         record_out_time(row_sts)
 
     #それぞれのテーブルを確認する
-    print("\n[member table]")
-    select_table("members")
+    # print("\n[member table]")
+    # select_table("members")
     print("\n[status table]")
     select_table("status")
-    print("\n[history table]")
-    select_table("history")
+    # print("\n[history table]")
+    # select_table("history")
 
 
     conn.commit()
