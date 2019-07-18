@@ -172,7 +172,7 @@ def felica_waiting():
 
 # tableを表示する
 def select_table(table):
-    sql = 'select * from "' + str(table) + '" order by sid desc'
+    sql = 'select sid, name from "' + str(table) + '" order by sid desc'
     for row in c.execute(sql):
         print(row)
 
