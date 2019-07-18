@@ -2,7 +2,7 @@
 * 1 [Time Checkerの使い方](https://bitbucket.org/tanakalabo/time_checker/wiki/Time%20Checker%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9)
 * 2 [http://192.168.11.120:3000](http://192.168.11.120:3000)
 * 3 [セットアップ](https://bitbucket.org/tanakalabo/time_checker/wiki/Time%20Checker%E3%81%AE%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97)
-* 4 [画面サンプル](https://bitbucket.org/tanakalabo/time_checker/wiki/%E7%94%BB%E9%9D%A2%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB) **
+* 4 [画面サンプル](https://bitbucket.org/tanakalabo/time_checker/wiki/%E7%94%BB%E9%9D%A2%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB)
 
 
 # time_checker
