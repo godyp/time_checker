@@ -17,6 +17,9 @@ if (isset($_POST["sub"])) {
     if ($rep != "") {
         $sql = "INSERT INTO message VALUES(" . strval($cnt[0]) . ",\"" . strval($rep) . "\", 0)";
         $db->query($sql);
+        // スプレッドシートに送信
+        $url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" . $sql;
+        file_get_contents($url);
     }
 }
 ?>
