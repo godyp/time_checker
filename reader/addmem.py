@@ -11,6 +11,7 @@ import datetime
 import sqlite3
 import RPi.GPIO as GPIO
 from ctypes import *
+import requests
 
 FELICA_POLLING_ANY = 0xffff
 libpafe = cdll.LoadLibrary("/usr/local/lib/libpafe.so")
@@ -158,6 +159,10 @@ def insert_members(idm):
     name = raw_input(">>> name : ")
     values = (idm, name, sid)
     c.execute("INSERT INTO members VALUES (?,?,?)", values)
+#     スプレッドシートに送信
+    sql = "INSERT INTO members VALUES " + str(values)
+    url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" + sql
+    requests.get(url)
     return True
 
 # members テーブルの中に idm が

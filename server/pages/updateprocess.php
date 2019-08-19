@@ -34,6 +34,10 @@
         $stmt->bindValue(2, $new_in_min);
         $stmt->bindValue(3, $id);
         $stmt->bindValue(4, $timestamp);
+        // スプレッドシートに送信
+        $sql = "UPDATE history SET in_hour = " . strval($new_in_hour) . ", in_minute = " . strval($new_in_min) . " WHERE sid = " . strval($id) . " AND timestamp = " . strval($timestamp);
+        $url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" . $sql;
+        file_get_contents($url);
     }elseif(isset($_POST['out_datapost'])){
         //更新時間情報
         list($new_out_hour,$new_out_min) = explode(':', $_POST['outtime']);
@@ -49,6 +53,10 @@
         $stmt->bindValue(2, $new_out_min);
         $stmt->bindValue(3, $id);
         $stmt->bindValue(4, $timestamp);
+        // スプレッドシートに送信
+        $sql = "UPDATE history SET in_hour = " . strval($new_out_hour) . ", in_minute = " . strval($new_out_min) . " WHERE sid = " . strval($id) . " AND timestamp = " . strval($timestamp);
+        $url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" . $sql;
+        file_get_contents($url);
     }
     $stmt->execute();
     $pdo = NULL;
@@ -58,4 +66,3 @@
     }else{
         header('Location:error.php');
     }
-?>

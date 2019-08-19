@@ -208,6 +208,10 @@ def record_out_time(row_sts):
     c.execute("INSERT INTO history VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", values)
     sql = 'delete from status where sid="' + str(sid) + '"'
     c.execute(sql)
+    # スプレッドシートに送信
+    sql = "INSERT INTO history VALUES " + str(values)
+    url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" + sql
+    requests.get(url)
 
 # staying timeテーブルに滞在時間を記録する
 # def record_staying_time(values):
