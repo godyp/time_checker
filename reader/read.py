@@ -11,6 +11,7 @@ from threading import Thread, Timer
 import datetime
 import sqlite3
 import RPi.GPIO as GPIO
+import requests
 
 FELICA_POLLING_ANY = 0xffff
 libpafe = cdll.LoadLibrary("/usr/local/lib/libpafe.so")
