@@ -35,21 +35,9 @@ if (isset($_POST['in_datapost'])) {
     $stmt->bindValue(3, $id);
     $stmt->bindValue(4, $timestamp);
     // スプレッドシートに送信
-    // $sql = "UPDATE history SET in_hour = \"" . strval($new_in_hour) . "\", in_minute = \"" . strval($new_in_min) . "\" WHERE sid = " . strval($id) . " AND timestamp = \"" . strval($timestamp) + "\"";
-    // $url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" . $sql;
-    // file_get_contents($url);
-    // ストリームを作成します
-    $opts = array(
-        'http' => array(
-            'method' => "GET",
-            'content' => http_build_query(array(
-                'sql' => $sql,
-            ))
-        ),
-    );
-    $context = stream_context_create($opts);
-    // 上で設定した HTTP ヘッダを使用してファイルをオープンします
-    $file = file_get_contents('https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec', false, $context);
+    $sql = "'UPDATE history SET in_hour = \"" . strval($new_in_hour) . "\", in_minute = \"" . strval($new_in_min) . "\" WHERE sid = " . strval($id) . " AND timestamp = \"" . strval($timestamp) + "\"'";
+    $command="python ../../reader/send.py " . $sql;
+    exec($command,$output);
 } elseif (isset($_POST['out_datapost'])) {
     //更新時間情報
     list($new_out_hour, $new_out_min) = explode(':', $_POST['outtime']);
@@ -66,21 +54,9 @@ if (isset($_POST['in_datapost'])) {
     $stmt->bindValue(3, $id);
     $stmt->bindValue(4, $timestamp);
     // スプレッドシートに送信
-    // $sql = "UPDATE history SET out_hour = \"" . strval($new_out_hour) . "\", out_minute = \"" . strval($new_out_min) . "\" WHERE sid = " . strval($id) . " AND timestamp = \"" . strval($timestamp) + "\"";
-    // $url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" . $sql;
-    // file_get_contents($url);
-    // ストリームを作成します
-    $opts = array(
-        'http' => array(
-            'method' => "GET",
-            'content' => http_build_query(array(
-                'sql' => $sql,
-            ))
-        ),
-    );
-    $context = stream_context_create($opts);
-    // 上で設定した HTTP ヘッダを使用してファイルをオープンします
-    $file = file_get_contents('https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec', false, $context);
+    $sql = "'UPDATE history SET in_hour = \"" . strval($new_in_hour) . "\", in_minute = \"" . strval($new_in_min) . "\" WHERE sid = " . strval($id) . " AND timestamp = \"" . strval($timestamp) + "\"'";
+    $command="python ../../reader/send.py " . $sql;
+    exec($command,$output);
 }
 $stmt->execute();
 $pdo = NULL;
