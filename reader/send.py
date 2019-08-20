@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # コマンドラインでsql文を受け取ってスプレッドシートに送信
 
 import requests
