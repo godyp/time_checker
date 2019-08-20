@@ -18,8 +18,20 @@ if (isset($_POST["sub"])) {
         $sql = "INSERT INTO message VALUES(" . strval($cnt[0]) . ",\"" . strval($rep) . "\", 0)";
         $db->query($sql);
         // スプレッドシートに送信
-        $url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" . $sql;
-        file_get_contents($url);
+        // $url = "https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec?sql=" . $sql;
+        // file_get_contents($url);
+        // ストリームを作成します
+        $opts = array(
+            'http' => array(
+                'method' => "GET",
+                'content' => http_build_query(array(
+                    'sql' => $sql,
+                ))
+            ),
+        );
+        $context = stream_context_create($opts);
+        // 上で設定した HTTP ヘッダを使用してファイルをオープンします
+        $file = file_get_contents('https://script.google.com/macros/s/AKfycbxbAUD26YExWvN6SMr805EakST0tJA2T4MqU8pBudHGskHGw1Q/exec', false, $context);
     }
 }
 ?>
