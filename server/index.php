@@ -15,12 +15,11 @@ if (isset($_POST["sub"])) {
     $cnt = $db->query($sql)->fetchArray();
     $rep = $_POST["report"];
     if ($rep != "") {
-        $sql = "INSERT INTO message VALUES(" . strval($cnt[0]) . ",\"" . strval($rep) . "\", 0)";
         $db->query($sql);
         // スプレッドシートに送信
-        // $sql = "'UPDATE history SET in_hour = \"" . strval($new_in_hour) . "\", in_minute = \"" . strval($new_in_min) . "\" WHERE sid = " . strval($id) . " AND timestamp = \"" . strval($timestamp) + "\"'";
-        // $command="python ../../reader/send.py " . $sql;
-        // exec($command,$output);
+        $sql = "INSERT INTO message VALUES(" . strval($cnt[0]) . ",'" . strval($rep) . "', 0)";
+        $command = "python ../reader/send.py \"" . $sql . "\"";
+        exec($command, $output);
     }
 }
 ?>

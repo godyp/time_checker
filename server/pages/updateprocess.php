@@ -35,9 +35,9 @@ if (isset($_POST['in_datapost'])) {
     $stmt->bindValue(3, $id);
     $stmt->bindValue(4, $timestamp);
     // スプレッドシートに送信
-    // $sql = "'UPDATE history SET in_hour = \"" . strval($new_in_hour) . "\", in_minute = \"" . strval($new_in_min) . "\" WHERE sid = " . strval($id) . " AND timestamp = \"" . strval($timestamp) + "\"'";
-    // $command="python ../../reader/send.py " . $sql;
-    // exec($command,$output);
+    $sql = "UPDATE history SET in_hour = '" . $new_in_hour . "', in_minute = '" . $new_in_min . "' WHERE sid = " . strval($id) . " AND timestamp = '" . $timestamp . "'";
+    $command = "python ../../reader/send.py \"" . $sql . "\"";
+    exec($command, $output);
 } elseif (isset($_POST['out_datapost'])) {
     //更新時間情報
     list($new_out_hour, $new_out_min) = explode(':', $_POST['outtime']);
@@ -54,9 +54,9 @@ if (isset($_POST['in_datapost'])) {
     $stmt->bindValue(3, $id);
     $stmt->bindValue(4, $timestamp);
     // スプレッドシートに送信
-    // $sql = "'UPDATE history SET in_hour = \"" . strval($new_in_hour) . "\", in_minute = \"" . strval($new_in_min) . "\" WHERE sid = " . strval($id) . " AND timestamp = \"" . strval($timestamp) + "\"'";
-    // $command="python ../../reader/send.py " . $sql;
-    // exec($command,$output);
+    $sql = "UPDATE history SET out_hour = '" . $new_out_hour . "', out_minute = '" . $new_out_min . "' WHERE sid = " . strval($id) . " AND timestamp = '" . $timestamp . "'";
+    $command = "python ../../reader/send.py \"" . $sql . "\"";
+    exec($command, $output);
 }
 $stmt->execute();
 $pdo = NULL;
